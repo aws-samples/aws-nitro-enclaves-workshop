@@ -1,0 +1,57 @@
+RelativeURLs=true
+CanonifyURLs=true
+languageCode = "en-US"
+defaultContentLanguage = "en"
+
+title = "AWS Nitro Enclaves Workshop"
+theme = "learn"
+metaDataFormat = "yaml"
+defaultContentLanguageInSubdir= true
+
+uglyurls = true
+sectionPagesMenu = "main"
+pygmentsCodeFences = true
+pygmentsStyle = "monokai"
+
+[params]
+  description = "Learn how to use AWS Nitro Enclaves to process highly sensitive data."
+  author = "Amazon AWS"
+  disableBreadcrumb = false
+  disableNextPrev = false
+  themeVariant = "aws"
+  disableSearch = false
+  disableAssetsBusting = true
+  disableLanguageSwitchingButton = true #TODO: Set back to false once it's translated
+  disableShortcutsTitle = true
+  disableInlineCopyToClipBoard = true
+
+[outputs]
+home = [ "HTML", "RSS", "JSON"]
+
+[privacy.youtube]
+    disable = false
+    privacyEnhanced = true
+[privacy.twitter]
+    disable = false
+    enableDNT = true
+    simple = true
+
+[markup]
+  defaultMarkdownHandler = "goldmark"
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+[languages]
+  [languages.en]
+    title = "AWS Nitro Enclaves Workshop"
+    languageName = "English"
+    weight = 10
+  [languages.es]
+    title = "AWS Nitro Enclaves Workshop"
+    languageName = "Español"
+    weight = 20
+  [languages.pt]
+    title = "AWS Nitro Enclaves Workshop"
+    languageName = "Português"
+    weight = 30
