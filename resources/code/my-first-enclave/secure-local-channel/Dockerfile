@@ -1,3 +1,6 @@
+# // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# // SPDX-License-Identifier: MIT-0
+
 #vsock demo image
 FROM public.ecr.aws/amazonlinux/amazonlinux:2
 
