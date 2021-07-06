@@ -1,0 +1,2 @@
+allowlist:
+- {address: ip-ranges.amazonaws.com, port: 443}
