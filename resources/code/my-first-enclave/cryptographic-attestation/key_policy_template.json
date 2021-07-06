@@ -1,0 +1,33 @@
+{
+  "Id": "key-consolepolicy-3",
+  "Version": "2012-10-17",
+  "Statement": [
+      {
+          "Sid": "Enable IAM User Permissions",
+          "Effect": "Allow",
+          "Principal": {
+              "AWS": "arn:aws:iam::ACCOUNT_ID:root"
+          },
+          "Action": "kms:*",
+          "Resource": "*"
+      },
+      {
+          "Sid": "Enable Cloud9 Environment to Encrypt",
+          "Effect": "Allow",
+          "Principal": {
+              "AWS": "AWS_PRINCIPAL"
+          },
+          "Action": "kms:Encrypt",
+          "Resource": "*"
+      },
+      {
+          "Sid": "Enable Cloud9 Environment to Decrypt",
+          "Effect": "Allow",
+          "Principal": {
+              "AWS": "AWS_PRINCIPAL"
+          },
+          "Action": "kms:Decrypt",
+          "Resource": "*"
+      }
+  ]
+}

@@ -1,0 +1,4 @@
+# // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# // SPDX-License-Identifier: MIT-0
+requests==2.25.1
+boto3==1.17.81
