@@ -1,10 +1,14 @@
 ---
-title: "Cleanup"
+linkTitle: "Cleanup"
+title: "Workshop Cleanup"
 weight: 200
 chapter: true
 ---
 
+
+<!-- TODO: Temporarily fixing duplicate headers in chapters on published workshop. Note: This hides header from local build.
 # Workshop Cleanup
+-->
 
 ### Thank you for exploring the AWS Nitro Enclaves workshop!
 ---

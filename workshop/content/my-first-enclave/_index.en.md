@@ -5,7 +5,9 @@ weight: 20
 ---
 
 
+<!-- TODO: Temporarily fixing duplicate headers in chapters on published workshop. Note: This hides header from local build.
 # My First Enclave
+-->
 
 {{% youtube tRL7Y0mJqU4 %}}
 
