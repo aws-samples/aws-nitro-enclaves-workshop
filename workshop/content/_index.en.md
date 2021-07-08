@@ -1,9 +1,8 @@
-+++
-title = "AWS Nitro Enclaves Workshop"
-chapter = true
-weight = 1
-+++
-
+---
+title: "AWS Nitro Enclaves Workshop"
+chapter: true
+weight: 1
+---
 
 <!-- TODO: Temporarily fixing duplicate headers in chapters on published workshop. Note: This hides header from local build.
 # AWS Nitro Enclaves Workshop
