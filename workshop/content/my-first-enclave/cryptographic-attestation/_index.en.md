@@ -363,11 +363,9 @@ So far in this section you've explored the base functionality of this sensitive 
 
 The enclave application file `server.py` contains the following code:
 
-```python {linenos=true, linenostart=64}
-last_four = str(plaintext)[-4:]
-
-r = {}
-r["last_four"] = last_four
+```python {linenos=true, linenostart=79}
+    last_four = str(plaintext)[-4:]
+    r["last_four"] = last_four
 
 c.send(str.encode(json.dumps(r)))
 
@@ -382,11 +380,9 @@ $ sed -i "s|\[-4:\]||" ./server.py
 
 After running this command `server.py` will now look like this:
 
-```python {linenos=true, linenostart=64}
-last_four = str(plaintext)
-
-r = {}
-r["last_four"] = last_four
+```python {linenos=true, hl_lines=[1] linenostart=79}
+    last_four = str(plaintext)
+    r["last_four"] = last_four
 
 c.send(str.encode(json.dumps(r)))
 
