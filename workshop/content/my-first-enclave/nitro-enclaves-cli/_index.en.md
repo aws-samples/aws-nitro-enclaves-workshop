@@ -51,14 +51,19 @@ For detailed steps on installing the CLI, see [Prerequisites and environment set
     </pre>
 
     {{% notice info %}}
-The default values are `512MB` and `2 CPUs`. You can update these values and should be less than RAM and CPU available on EC2 instance. The changes require restarting `nitro-enclaves-allocator` service.
+The default values are `512MB` and `2 vCPUs`. You can update these values and should be less than free memory and number of cores available on EC2 instance. 
     {{% /notice %}}
 
 1. Check available RAM and vCPU on EC2 instance. `CPU` and `RAM` reserved for the enclave should be less than the free available `RAM` and `CPU` on the parent EC2 instance.
     ```sh
-    $ free -m
+    $ free -h
     $ getconf _NPROCESSORS_ONLN
     ```
+
+    {{% notice info %}}
+The changes require restarting `nitro-enclaves-allocator` service. You should allocate CPU in full cores i.e. 2x vCPU for x86 hyper-threaded instances. 
+    {{% /notice %}}
+
 
 ### Build Nitro Enclave Image File
 
@@ -166,6 +171,10 @@ The `build-enclave` subcommand is not supported on Windows. If you are using a W
     }
     </pre>
 
+    {{% notice info %}}
+If you don't allocate enough memory while running enclave then you will see a error similar to `[ E26 ] Insufficient memory requested. User provided `memory` is 1784 MB, but based on the EIF file size, the minimum memory should be 1792 MB`
+    {{% /notice %}}
+
 
 1. Use `describe-enclaves` command to list running Enclaves and display associated attributes such as `EnclaveID`, `ProcessID`, `EnclaveCID`, `State`, `CPUIDs`, `MemoryMiB` and `Flags`. 
 
@@ -242,6 +251,8 @@ The `build-enclave` subcommand is not supported on Windows. If you are using a W
 {{% notice tip %}}
 For additional details on the Nitro Enclaves CLI subcommands, see [Documentation](https://docs.aws.amazon.com/enclaves/latest/user/nitro-enclave-cli-ref.html).
 {{% /notice %}}
+
+### Summary
 
 You have now seen how to build and run a simple Enclave application. Feel free to explore the code for this section. Then, proceed to the next section to learn about the `vsock` communication channel between the parent instance and the Enclave.
 
