@@ -1,8 +1,8 @@
-+++
-title = "My First Enclave"
-chapter = true
-weight = 20
-+++
+---
+title: "My First Enclave"
+chapter: true
+weight: 20
+---
 
 
 # My First Enclave

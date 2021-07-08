@@ -1,9 +1,8 @@
-+++
-title = "AWS Nitro Enclaves Workshop"
-chapter = true
-weight = 1
-+++
-
+---
+title: "AWS Nitro Enclaves Workshop"
+chapter: true
+weight: 1
+---
 
 # AWS Nitro Enclaves Workshop
 

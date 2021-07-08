@@ -1,8 +1,8 @@
-+++
-title = "Cleanup"
-weight = 200
-chapter = true
-+++
+---
+title: "Cleanup"
+weight: 200
+chapter: true
+---
 
 # Workshop Cleanup
 
@@ -10,6 +10,11 @@ chapter = true
 ---
 
 Now that you have completed the module(s), we can proceed to destroy all of the resources that were created. To begin cleanup, if you completed the workshop...
+
+## ...at an AWS event
+
+There is nothing for you to cleanup and we will take care of the rest.
+
 
 ## ...on your own
 
@@ -58,10 +63,6 @@ Using the AWS Management Console to delete a KMS CMK:
 1. Select **Confirm that you want to schedule these keys for deletion after a X day waiting period**.
 
 1. Choose **Schedule deletion**.
-
-## ...at an AWS event
-
-There is nothing for you to cleanup and we will take care of the rest.
 
 ---
 ### Thank you for exploring the AWS Nitro Enclaves workshop!
