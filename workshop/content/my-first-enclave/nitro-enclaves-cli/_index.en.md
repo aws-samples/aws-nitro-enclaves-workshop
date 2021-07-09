@@ -51,13 +51,13 @@ For detailed steps on installing the CLI, see [Prerequisites and environment set
     </pre>
 
     {{% notice info %}}
-The default values are `512MB` and `2 vCPUs`. You can update these values and should be less than free memory and number of cores available on EC2 instance. 
+The default values are `512MB` and `2 vCPUs`.
     {{% /notice %}}
 
-1. Check available RAM and vCPU on EC2 instance. `CPU` and `RAM` reserved for the enclave should be less than the free available `RAM` and `CPU` on the parent EC2 instance.
+1. Let's check available memory and CPU on parent EC2 instance after you have allocated resources to Nitro Enclave.
     ```sh
-    $ free -h
-    $ getconf _NPROCESSORS_ONLN
+    $ free -m
+    $ lscpu
     ```
 
     {{% notice info %}}
