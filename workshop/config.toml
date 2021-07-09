@@ -44,13 +44,11 @@ home = [ "HTML", "RSS", "JSON"]
 
 [[menu.shortcuts]]
 name = "<i class='fab fa-github'></i> GitHub project"
-identifier = "ds"
 url = "https://github.com/aws-samples/aws-nitro-enclaves-workshop"
 weight = 10
 
 [[menu.shortcuts]]
 name = "<i class='fas fa-envelope'></i> Have questions?"
-identifier = "feedback"
 url = "mailto:aws-nitro-enclaves-workshop@amazon.com?subject=Question%20from%20nitro-enclaves.workshop.aws"
 weight = 20
 
