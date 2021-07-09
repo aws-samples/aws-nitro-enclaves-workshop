@@ -54,7 +54,7 @@ For detailed steps on installing the CLI, see [Prerequisites and environment set
 The default values are `512MB` and `2 vCPUs`.
     {{% /notice %}}
 
-1. Let's check available memory and CPU on parent EC2 instance after you have allocated resources to Nitro Enclave.
+1. Let's check available memory and CPU on parent EC2 instance after you have allocated resources to Nitro Enclave. The resources were allocated with default values when you started `nitro-enclaves-allocator` service in pre-requisites section.
     ```sh
     $ free -m
     $ lscpu
