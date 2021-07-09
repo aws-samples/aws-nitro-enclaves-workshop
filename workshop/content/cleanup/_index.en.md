@@ -1,7 +1,7 @@
 ---
 linkTitle: "Cleanup"
 title: "Workshop Cleanup"
-weight: 200
+weight: 30
 chapter: true
 ---
 

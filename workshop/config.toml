@@ -42,6 +42,16 @@ home = [ "HTML", "RSS", "JSON"]
     [markup.goldmark.renderer]
       unsafe = true
 
+[[menu.shortcuts]]
+name = "<i class='fab fa-github'></i> GitHub project"
+url = "https://github.com/aws-samples/aws-nitro-enclaves-workshop"
+weight = 10
+
+[[menu.shortcuts]]
+name = "<i class='fas fa-envelope'></i> Have questions?"
+url = "mailto:aws-nitro-enclaves-workshop@amazon.com?subject=Question%20from%20nitro-enclaves.workshop.aws"
+weight = 20
+
 [languages]
   [languages.en]
     title = "AWS Nitro Enclaves Workshop"
