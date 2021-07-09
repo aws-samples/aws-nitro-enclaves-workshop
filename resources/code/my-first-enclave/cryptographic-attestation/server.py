@@ -38,12 +38,20 @@ def decrypt_cipher(access, secret, token, ciphertext, region):
         "--aws-session-token", token,
         "--ciphertext", ciphertext,
     ],
-    stdout=subprocess.PIPE
-)   
+    stdout=subprocess.PIPE,
+    stderr=subprocess.PIPE
+)
     b64text = proc.communicate()[0].decode()
     plaintext = json.loads(base64.b64decode(b64text))
 
-    return plaintext
+    ret = proc.communicate()
+
+    if ret[0]:
+        b64text = proc.communicate()[0].decode()
+        plaintext = json.loads(base64.b64decode(b64text))
+        return plaintext
+    else:
+        return "KMS Error. Decryption Failed."
 
 
 def main():
@@ -59,15 +67,17 @@ def main():
     while True:
         c, addr = s.accept()
         payload = c.recv(4096)
+        r = {}
         credentials = json.loads(payload.decode())
 
         plaintext = get_plaintext(credentials)
         print(plaintext)
-        
-        last_four = str(plaintext)[-4:]
 
-        r = {}
-        r["last_four"] = last_four
+        if plaintext == "KMS Error. Decryption Failed.":
+            r["error"] = plaintext
+        else:
+            last_four = str(plaintext)[-4:]
+            r["last_four"] = last_four
 
         c.send(str.encode(json.dumps(r)))
 
