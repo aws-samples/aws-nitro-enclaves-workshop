@@ -5,10 +5,10 @@ weight: 2
 ---
 
 {{% notice note %}}
-Follow the steps below while logged in to you account with the user your created in the previous [Create an AWS account](account.html) section.
+Follow the steps below while logged in to your account with the user you created in the previous [Create an AWS account](account.html) section.
 {{% /notice %}}
 {{% notice warning %}}
-If you skipped creation of a new account and use existing account, make sure it has default vpc. If it is missing you can follow next steps to [Create a Default VPC](https://docs.aws.amazon.com/vpc/latest/userguide/default-vpc.html#create-default-vpc).
+If you skipped creating a new account and using an existing account, make sure it has default VPC. If it is missing, you can follow next steps to [Create a Default VPC](https://docs.aws.amazon.com/vpc/latest/userguide/default-vpc.html#create-default-vpc).
 {{% /notice %}}
 
 1. Download the AWS CloudFormation template from this workshop's GitHub repo.
@@ -31,12 +31,12 @@ If you skipped creation of a new account and use existing account, make sure it 
 
 1. Select all three capabilities and click _Create stack_.
 {{% notice warning %}}
-This CloudFormation stack will create AWS resources and you may incur additional charges if these resources are left in your AWS account.  
-Please refer to cleanup procedures of the workshop and review all the resources created.
+This CloudFormation stack will create AWS resources, and you may incur additional charges if these resources are left in your AWS account.  
+Please refer to the cleanup procedures of the workshop and review all the resources created.
 {{% /notice %}}
 ![Review](/images/cloud9-4-review.png?featherlight=false)
 
-1. This is a good time to stretch your legs, while the stack is created and reaches `CREATE_COMPLETE`. This takes about 5 minutes.
+1. This is an excellent time to stretch your legs while the stack is created and reaches `CREATE_COMPLETE`. This takes about 5 minutes.
 
 1. Navigate to the AWS Cloud9 console to view and open your environment IDE.
 
