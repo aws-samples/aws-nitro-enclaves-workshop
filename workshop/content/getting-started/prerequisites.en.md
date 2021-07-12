@@ -4,7 +4,7 @@ weight: 30
 ---
 
 
-You will be using AWS Cloud9 IDE as development environment to streamline the process. Now that you have it created, we can proceed to install the prerequisites we'll use throughout the workshop. These prerequisites will include:
+You will be using AWS Cloud9 IDE as a development environment to streamline the process. Now that you have it created, we can install the prerequisites we'll use throughout the workshop. These prerequisites will include:
 
 * [Disable AWS managed temporary credentials](#disable-aws-managed-temporary-credentials)
 * [Install and configure Nitro Enclaves CLI and tools](#install-and-configure-nitro-enclaves-cli-and-tools)
@@ -12,7 +12,7 @@ You will be using AWS Cloud9 IDE as development environment to streamline the pr
 
 ### Disable AWS managed temporary credentials
 
-1. With your AWS Cloud9 the environment open, in the AWS Cloud9 IDE, on the menu bar choose the **AWS Cloud9 icon, Preferences**.
+1. With your AWS Cloud9 environment open, in the AWS Cloud9 IDE, on the menu bar, choose the **AWS Cloud9 icon, Preferences**.
 
 1. On the **Preferences** tab, in the navigation pane, choose **AWS Settings, Credentials**.
 
@@ -24,7 +24,7 @@ You will be using AWS Cloud9 IDE as development environment to streamline the pr
 You do not have to be in any specific folder as by default CLI tool will be installed in `build/install`. Learn more in [Documentation](https://github.com/aws/aws-nitro-enclaves-cli)
 {{% /notice %}}
 
-1. Install the Nitro Enclaves CLI. This will enable you to run enclaves.
+1. Install the Nitro Enclaves CLI, which will enable you to run enclaves.
     ```sh
     $ sudo amazon-linux-extras install aws-nitro-enclaves-cli -y
     ```
@@ -40,7 +40,7 @@ You do not have to be in any specific folder as by default CLI tool will be inst
     $ sudo usermod -aG docker $USER
     ```
 
-1. Verify that the Nitro Enclaves CLI installed correctly.
+1. Verify that the Nitro Enclaves CLI was installed correctly.
     ```sh
     $ nitro-cli --version
     ```
@@ -57,7 +57,7 @@ You do not have to be in any specific folder as by default CLI tool will be inst
     $ sudo systemctl start docker && sudo systemctl enable docker
     ```
 
-1. Reboot the instance. At this point, we would need to log out and log back in to ensure that the `usermod` command that appended user to groups takes effect. One option could be to start a new shell with something like `exec sudo su --login $USER` and another could be by preparing the `groupadd` and `usermod` commands before the current shell login. However, since Cloud9 handles reboots gracefully and returns the shell to a similar state, we'll restart the instance.
+1. Reboot the instance. At this point, we would need to log out and log back in to ensure that the `usermod` command that appended user to groups takes effect. One option could be to start a new shell with something like `exec sudo su --login $USER`, and another could be by preparing the `groupadd` and `usermod` commands before the current shell login. However, since Cloud9 handles reboots gracefully and returns the shell to a similar state, we'll restart the instance.
     ```sh
     $ sudo shutdown -r now
     ```
@@ -83,7 +83,7 @@ For additional details, see [Documentation](https://docs.aws.amazon.com/enclaves
 
 ### Clone the workshop repository
 
-1. Use `git clone` download a copy of this workshop's repository. This repo includes the content used in subsequent modules.
+1. Use `git clone` to download a copy of this workshop's repository. This repo includes the content used in subsequent modules.
     ```sh
     $ git clone https://github.com/aws-samples/aws-nitro-enclaves-workshop.git
     ```
