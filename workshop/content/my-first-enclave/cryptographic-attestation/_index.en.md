@@ -5,13 +5,13 @@ weight = 14
 +++
 
 
-In this section you will gain experience with a sample sensitive data processing application that makes use of Nitro Enclaves cryptographic attestation and AWS KMS to isolate sensitive data processing within the boundary of your enclave. This sample demonstrates how cryptographic attestation can be used to protect the privacy of sensitive data. Initially you will build and deploy this sample application without taking advantage of cryptographic attestion in order to understand its operation. In the second phase of this section you will enable cryptographic attestion and observe how it can be used to enhance the isolation of sensitive data processing workloads in a Nitro Enclave.
+In this section, you will gain experience with a sample sensitive data processing application that makes use of Nitro Enclaves cryptographic attestation and AWS KMS to isolate sensitive data processing within the boundary of your enclave. This sample demonstrates how cryptographic attestation can be used to protect the privacy of sensitive data. Initially, you will build and deploy this sample application without taking advantage of cryptographic attestation in order to understand its operation. In the second phase of this section, you will enable cryptographic attestation and observe how it can be used to enhance the isolation of sensitive data processing workloads in a Nitro Enclave.
 
 ### A unique feature on Nitro Enclaves
 
 Using the Nitro Enclaves SDK, an enclave can request a cryptographically signed attestation document from the Nitro Hypervisor that includes its unique measurements. The enclave uses the attestation process to prove its identity and build trust with an external service using a series of measurements that are unique to an enclave.
 
-An enclave's measurements includes a series of hashes and platform configuration registers (PCRs) that are unique to the enclave. You've seen some of these measurements before when you built an enclave EIF and saved the measurement values labeled `PCR0`, `PCR1`, & `PCR2`. The complete list of 6 PCRs are:
+An enclave's measurements include a series of hashes and platform configuration registers (PCRs) that are unique to the enclave. You've seen some of these measurements before when you built an enclave EIF and saved the measurement values labeled `PCR0`, `PCR1`, & `PCR2`. The complete list of 6 PCRs are:
 
 |PCR|Hash of ...|Description|
 |--- |--- |--- |
@@ -26,14 +26,14 @@ You can integrate cryptographic attestation with your own applications and also 
 ### Sample sensitive data processing application overview
 
 {{% notice warning %}}
-This module is intended to demonstrate the properities of Nitro Enclaves and offer hands on experience with the Nitro Enclaves development experience. The module is designed as a teaching tool and it does not represent an example of security best practices for a production Nitro Enclaves application architecture.
+This module is intended to demonstrate the properties of Nitro Enclaves and offer hands-on experience with the Nitro Enclaves development experience. The module is designed as a teaching tool, and it does not represent an example of security best practices for a production Nitro Enclaves application architecture.
 {{% /notice %}}
 
-The application you will build in this module consists of a server component which will run inside your Nitro Enclave and a client component which will be executed on your parent instance. The client component operates in two phases: data preparation and data submission.
+The application you will build in this module consists of a server component that will run inside your Nitro Enclave and a client component that will be executed on your parent instance. The client component operates in two phases: data preparation and data submission.
 
-In the data preparation phase the client component of your application reads an input file containing simulated strings which stand in for sensitive values such as credit card or social security numbers. To prepare this data for later processesing the client component selects one of these values at random, encrypts it using an [AWS Key Management Service (KMS)](https://aws.amazon.com/kms/) customer master key (CMK).
+In the data preparation phase, the client component of your application reads an input file containing simulated strings that stand in for sensitive values such as credit card or social security numbers. To prepare this data for later processing, the client component selects one of these values at random, encrypts it using an [AWS Key Management Service (KMS)](https://aws.amazon.com/kms/) customer master key (CMK).
 
-In the data submission phase the client component passes the encrypted value that you prepared previously to the server component running inside your enclave using the secure local vsock channel. The server component takes this value, sets up an end-to-end encrypted connection with KMS through the vsock and a proxy application running on the parent instance and then decrypts the simulated sensitive value.
+In the data submission phase, the client component passes the encrypted value that you prepared previously to the server component running inside your enclave using the secure local vsock channel. The server component takes this value, sets up an end-to-end encrypted connection with KMS through the vsock and a proxy application running on the parent instance, and then decrypts the simulated sensitive value.
 
 {{% notice tip %}}
 The business logic of this application is written in Python. If time allows, please review the code at  
@@ -46,13 +46,13 @@ to understand the internal functioning of this sample. The client component that
 
 ### Packaging your enclave application as a docker image
 
-Nitro Enclaves use the docker images as a convenient format for packaging the applications you wish to launch in a enclave.
+Nitro Enclaves use the docker images as a convenient format for packaging the applications you wish to launch in an enclave.
 
 To package the code for this sample application into a docker image:
 
-1. Click in to your Cloud 9 terminal window
+1. Click into your Cloud 9 terminal window
 
-1. Change directory to the code directory for the My First Enclave module by entering this following command:
+1. Change directory to the code directory for the My First Enclave module by entering the following command:
     ```sh
     $ cd ~/environment/aws-nitro-enclaves-workshop/resources/code/my-first-enclave/cryptographic-attestation
     ```
@@ -63,12 +63,12 @@ To package the code for this sample application into a docker image:
     ```
 
 {{% notice tip %}}
-The docker build process will take a few minutes to complete so you should continue to the section below while you wait for it to complete. To do so, leave your current terminal open and create a new terminal tab in Cloud9. Click in to this new terminal and run the command in Step 2 above again.
+The docker build process will take a few minutes to complete, so you should continue to the section below while you wait for it to complete. To do so, leave your current terminal open and create a new terminal tab in Cloud9. Click into this new terminal and run the command in Step 2 above again.
 {{% /notice %}}
 
 ### Create a KMS CMK
 
-To get started you'll need to create a KMS CMK for use by your application.
+To get started, you'll need to create a KMS CMK for use by your application.
 
 To create a KMS CMK using the AWS Management Console:
 
@@ -125,16 +125,16 @@ Your KMS key policy should now contain a single statement that allows IAM users 
     ]
 </pre>
 
-The IAM principal associated with your Cloud9 Environment is not granted permission in its IAM policies to perform any actions on your CMK. For example you will be denied if you attempt to view metadata about the key from your Cloud9 terminal by issuing the following command:
+The IAM principal associated with your Cloud9 Environment is not granted permission in its IAM policies to perform any actions on your CMK. For example, you will be denied if you attempt to view metadata about the key from your Cloud9 terminal by issuing the following command:
 ```sh
 $ aws kms describe-key --key-id "alias/my-enclave-key"
 ```
 
-In order to enable your Cloud9 environment to use the key to encrypt and decrypt data you'll configure that permission in the KMS Key Policy directly.
+In order to enable your Cloud9 environment to use the key to encrypt and decrypt data, you'll configure that permission in the KMS Key Policy directly.
 
 To prepare a new key policy for your CMK:
 
-1. Store the AWS IAM prinicpal and account associated with your Cloud9 environemnt in an enviornment variable by executing the following command in your Cloud9 terminal:
+1. Store the AWS IAM principal and account associated with your Cloud9 environment in an environment variable by executing the following command in your Cloud9 terminal:
     ```sh
     $ export AWS_PRINCIPAL=`aws sts get-caller-identity | jq -r ".Arn"`
     $ export ACCOUNT_ID=`aws sts get-caller-identity | jq -r ".Account"`
@@ -151,13 +151,13 @@ To prepare a new key policy for your CMK:
 
 1. To change the AWS Region, use the Region selector in the upper-right corner of the page.
 
-1. To view the keys in your account that you create and manage, in the navigation pane choose **Customer managed keys**.
+1. To view the keys in your account that you create and manage, choose **Customer managed keys** in the navigation pane.
 
 1. In the list of CMKs, choose the alias **my-enclave-key**.
 
 1. Choose the **Key policy** tab.
 
-1. On the **Key policy** tab you will see the *default view*. To see the key policy document, choose **Switch to policy view**.
+1. On the **Key policy** tab, you will see the *default view*. To see the key policy document, choose **Switch to policy view**.
 
     You will see the key policy document. This is *policy view*. In the key policy statements, you can see the principals who have been given access to the CMK by the key policy, and you can see the actions they can perform.
 
@@ -165,7 +165,7 @@ To prepare a new key policy for your CMK:
 
 1. Select **Open**.
 
-1. Your new key policy will open in a Cloud9 editor tab. Select all the text in the window and copy it to your system clipboard.
+1. Your new key policy will open in a Cloud9 editor tab. Please select all the text in the window and copy it to your system clipboard.
 
 1. Return to your window with your KMS CMK **Key policy** tab open. Select **Edit**.
 
@@ -200,13 +200,13 @@ Please be sure to carefully save these measurements for later reference as they 
 {{% /notice %}}
 
 
-<!-- Hide vsock-proxy start section as it is done in previous chapter.
+<!-- Hide vsock-proxy start section as it is done in the previous chapter.
 
 ### Start your vsock proxy
 
 The default configuration for the vsock-proxy service permits the enclave to communicate with AWS KMS endpoints in supported regions.
 
-To start the vsock-proxy service on the parent instance with the default configuration issue the following command in your Cloud9 terminal:
+To start the vsock-proxy service on the parent instance with the default configuration, issue the following command in your Cloud9 terminal:
 ```sh
 $ systemctl start nitro-enclaves-vsock-proxy.service
 ```
@@ -231,34 +231,34 @@ $ [ "$ENCLAVE_ID" != "null" ] && nitro-cli console --enclave-id ${ENCLAVE_ID}
 
 ### Interacting with your enclave application
 
-To install dependencies issue the following command in your other Cloud9 terminal:
+To install dependencies, issue the following command in your other Cloud9 terminal:
 ```sh
 $ pip3 install --user -r "requirements.txt"
 ```
 
 <!-- TODO: view values.txt -->
 
-To select a simulated sensitive value from `values.txt` at random and encrypt it using your KMS CMK issue the following command in your Cloud9 terminal:
+To select a simulated sensitive value from `values.txt` at random and encrypt it using your KMS CMK, issue the following command in your Cloud9 terminal:
 
 ```sh
 $ python3 client.py --prepare --values "values.txt"  --alias "my-enclave-key"
 ```
 
-If successful this command will print the encrypted cipher text for the selected value and its last four digits to your screen. It will also create a new file, `string.encrypted` containing the cyphertext.
+Suppose successful this command will print the encrypted ciphertext for the selected value and its last four digits to your screen. It will also create a new file, `string.encrypted`, containing the cyphertext.
 
-To send this cypertext in to your enclave issue the following command in your Cloud9 terminal:
+To send this cyphertext into your enclave, issue the following command in your Cloud9 terminal:
 
 ```sh
 $ python3 client.py --submit --ciphertext "string.encrypted"  --alias "my-enclave-key"
 ```
 
-In your host instance terminal you'll see that the last 4 digits of the sensitive value are returned to the parent.
+In your host instance terminal, you'll see that the last 4 digits of the sensitive value are returned to the parent.
 
 ### Taking advantage of cryptographic attestation
 
-Now that you have the broad strokes of you application up and running it is time to take things to the next level. As currently configured your application has two areas which could notably be improved on in order to isolate the processing of your simulated senstive value; the parent instance is currently able to view the plaintext sensitive data by a.) viewing the enclave debug console and b.) by decrypting the value itself using your KMS CMK.
+Now that you have the broad strokes of your application up and running, it is time to take things to the next level. As currently configured, your application has two areas that could notably be improved on in order to isolate the processing of your simulated sensitive value; the parent instance is currently able to view the plaintext sensitive data by a.) viewing the enclave debug console and b.) by decrypting the value itself using your KMS CMK.
 
-If you open up your terminal which you connected to the debug console you will be able to see information about the process running inside your enclave including the full plaintext of the sensitive value you sent in to the enclave in ciphertext form.
+Open up your terminal, which you connected to the debug console. You will be able to see information about the process running inside your enclave, including the entire plaintext of the sensitive value you sent into the enclave in ciphertext form.
 
 You could update your enclave application not to print this value to the console. However, your parent instance would still be able to decrypt this value itself using KMS directly. To decrypt the the ciphertext in `string.encrypted`, run the following command in your Cloud9 terminal:
 
@@ -270,11 +270,11 @@ $ base64 -di string.encrypted > string.encrypted.binary &&
   --query "Plaintext" | base64 --decode
 ```
 
-You'll see that this command prints the full plaintext  of the simulated sensitive value to the console. This command is using the Cloud9 enviornment credentials to call KMS directly. It does not depend on the server component running in the enclave at all.
+You'll see that this command prints the full plaintext of the simulated sensitive value to the console. This command is using the Cloud9 environment credentials to call KMS directly. It does not depend on the server component running in the enclave at all.
 
-Using AWS Nitro Enclaves cryptographic attestion with AWS KMS, however, you can configure your application so that the parent instance is unable to decrypt the simulated sensitive value while the enclave remains able to. Further more, cryptographic attestion can prohibit a user on the parent instance from accessing senstive data via the enclaves debug console.
+Using AWS Nitro Enclaves cryptographic attestation with AWS KMS, however, you can configure your application so that the parent instance is unable to decrypt the simulated sensitive value while the enclave remains able to. Furthermore, cryptographic attestation can prohibit a user on the parent instance from accessing sensitive data via the enclaves debug console.
 
-For this example you will use PCR0 which is a unique hash of a measurement of your `data-processing.eif` file.
+For this example, you will use PCR0, which is a unique hash of measurement of your `data-processing.eif` file.
 
 To add attestation conditions to your key policy:
 
@@ -288,7 +288,7 @@ To add attestation conditions to your key policy:
 
 5. Copy the following text and paste it into your Cloud9 editor.
 
-<!-- Please don't change indentation on json block below since we are making it neatly copy-pasteable. -->
+<!-- Please don't change indentation on JSON block below since we are making it neatly copy-pasteable. -->
 ```
 "Condition": {
               "StringEqualsIgnoreCase": {
@@ -307,9 +307,9 @@ To update your key policy:
 
 * Follow the steps in the [update the key policy for your CMK](#update-the-key-policy-for-your-cmk) procedure above.
 
-Your key policy now permits your Cloud9 enviornment principal to encrypt using the CMK but allows it to decrypt only when the request is accompanied by a signed attestion document that can be obtained only from within the enclave.
+Your key policy now permits your Cloud9 environment principal to encrypt using the CMK but allows it to decrypt only when the request is accompanied by a signed attestation document that can be obtained only from within the enclave.
 
-### Validating enclave attestion-based KMS key policy conditions
+### Validating enclave attestation-based KMS key policy conditions
 
 Now that you've updated you key policy, confirm that the new condition has take effect by issuing the following command in your Cloud9 terminal:
 ```sh
@@ -320,15 +320,15 @@ $ base64 -di string.encrypted > string.encrypted.binary &&
   --query "Plaintext" | base64 --decode    
 ```
 
-If successful you'll receive a message about `AccessDeniedException`. This occurs because although your Cloud9 environment principal has permission to decrypt using the key, you've now placed a condition on that permission that it only apply to request coming from an enclave launched with your specific `data-processing.eif` enclave image file.
+If successful, you'll receive a message about `AccessDeniedException`. This occurs because although your Cloud9 environment principal has permission to decrypt using the key, you've now placed a condition on that permission that it only applies to request coming from an enclave launched with your specific `data-processing.eif` enclave image file.
 
-This change will also impact the behaviour of the enclave in debug mode. To validate the behaviour, re-submit your encrypted value to the enclave by running the following command in your Cloud9 terminal:
+This change will also impact the behavior of the enclave in debug mode. To validate the behavior, re-submit your encrypted value to the enclave by running the following command in your Cloud9 terminal:
 ```sh
 $ python3 client.py --submit --ciphertext "string.encrypted"  --alias "my-enclave-key"
 ```
 <!-- TODO -- Server.py needs to be cleaned up. The denial is currently crashing the enclave -->
 
-This command failes because the Nitro Hypervisor will not sign an attestation document with real PCR values for an enclave launched in debug mode.
+This command fails because the Nitro Hypervisor will not sign an attestation document with actual PCR values for an enclave launched in debug mode.
 
 {{% notice note %}}
 Enclaves booted in debug mode generate attestation documents with PCRs that are made up entirely of zeros (`000000000000000000000000000000000000000000000000`). These attestation documents cannot be used for cryptographic attestation.
@@ -359,7 +359,7 @@ Thanks to cryptographic attestation and the KMS condition key you added, a user 
 
 ### Modifying the enclave application code
 
-So far in this section you've explored the base functionality of this sensitive data processing application and how cryptographic attestation can be used to protect against a parent decrypting using its own credentials or gaining access to plaintext sensitive data via the debug console. What if, however, a motivated attacker simply modified an enclave to return plaintext values over the vsock. Let's see what would happen.
+So far in this section, you've explored the base functionality of this sensitive data processing application and how cryptographic attestation can be used to protect against a parent decrypting using its own credentials or gaining access to plaintext sensitive data via the debug console. What if, however, a motivated attacker simply modified an enclave to return plaintext values over the vsock. Let's see what would happen.
 
 The enclave application file `server.py` contains the following code:
 
@@ -372,7 +372,7 @@ c.send(str.encode(json.dumps(r)))
 c.close()
 ```
 
-The trailing `[-4:]` on line 64 of `servery.py` is responsible for ensuring that the program returns only the last four numbers of the plaintext value. To modify this code to return the entire plaintext value to the parent over the vsock issue the following command in your Cloud9 terminal:
+The trailing `[-4:]` on line 64 of `servery.py` is responsible for ensuring that the program returns only the last four numbers of the plaintext value. To modify this code to return the entire plaintext value to the parent over the vsock, issue the following command in your Cloud9 terminal:
 
 ```sh
 $ sed -i "s|\[-4:\]||" ./server.py
@@ -389,20 +389,20 @@ c.send(str.encode(json.dumps(r)))
 c.close()
 ```
 
-To run this modified code in the enclave you'll need to build a new docker image and EIF. To launch an enclave with your modified code:
+To run this modified code in the enclave, you'll need to build a new docker image and EIF. To launch an enclave with your modified code:
 
-1. To build a new docker image with your modified code issue the following command in your Cloud9 terminal:
+1. To build a new docker image with your modified code, issue the following command in your Cloud9 terminal:
     ```sh
     $ docker build ./ -t "data-processing-modified"
     ```
 
-1. To build an EIF file from your newly created docker image issue the following command in your Cloud9 terminal:
+1. To build an EIF file from your newly created docker image, issue the following command in your Cloud9 terminal:
     ```sh
     $ nitro-cli build-enclave --docker-uri "data-processing-modified:latest" --output-file "data-processing-modified.eif"
     ```
 
     {{% notice info %}}
-If you carefully note the measurements returned to your terminal window and compare them with the measurements you saved when you first built your `data-processing.eif` file you'll see that PCRs 0 and 2 now show entirely different values becuase the application code and thus the image file as a whole have been modified. PCR1 remains unchanged as it reflects a measurement of the kernel and boot ramfs data which have not been changed my your modification.
+If you carefully note the measurements returned to your terminal window and compare them with the measurements you saved when you first built your `data-processing.eif` file, you'll see that PCRs 0 and 2 now show entirely different values because the application code and thus the image file as a whole have been modified. PCR1 remains unchanged as it reflects a measurement of the kernel and boot ramfs data which have not been changed my your modification.
     {{% /notice %}}
 
 1. Terminate your running enclave by issuing the following command in your Cloud9 terminal:
@@ -417,7 +417,7 @@ If you carefully note the measurements returned to your terminal window and comp
     $ nitro-cli run-enclave --cpu-count 2 --memory 2148 --eif-path "./data-processing-modified.eif"
     ```
 
-1. Submit your ciphertext to the updated enclave which is now programed to return the entire plaintext produced by decrypting the provided ciphertext by issuing the following command in your Cloud9 terminal:
+1. Submit your ciphertext to the updated enclave, which is now programmed to return the entire plaintext produced by decrypting the provided ciphertext by issuing the following command in your Cloud9 terminal:
     ```sh
     $ python3 client.py --submit --ciphertext "string.encrypted"  --alias "my-enclave-key"
     ```
@@ -426,7 +426,7 @@ Fortunately, the security model of our application protects the privacy of the s
 
 ### Summary
 
-In this section you built, deployed, and tested a sample application which processes encrypted values within an enclave. You then identified opportunites for these plaintext values to be obtained outside of the trusted enclave application and Nitro Enclaves cryptographic attestion and AWS KMS cryptographic attestation condition keys to improve the isolation and confidentiality of your sensitive data provessing application.
+In this section, you built, deployed, and tested a sample application that processes encrypted values within an enclave. You then identified opportunities for these plaintext values to be obtained outside of the trusted enclave application and Nitro Enclaves cryptographic attestation and AWS KMS cryptographic attestation condition keys to improving the isolation and confidentiality of your sensitive data processing application.
 
 ---
 #### Proceed to the [Troubleshooting](troubleshooting.html) section to continue the workshop.
