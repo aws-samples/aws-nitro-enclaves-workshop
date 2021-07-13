@@ -5,9 +5,9 @@ weight = 12
 +++
 
 
-The **Nitro Enclaves CLI (Nitro CLI)** is a command line tool for managing the lifecycle of enclaves. You can use the Nitro CLI to create, manage, and terminate Nitro enclaves. The Nitro CLI must be installed on the Amazon EC2 parent instance. 
+The **Nitro Enclaves CLI (Nitro CLI)** is a command-line tool for managing the lifecycle of enclaves. You can use the Nitro CLI to create, manage, and terminate Nitro Enclaves. The Nitro CLI must be installed on the Amazon EC2 parent instance. 
 
-In this section you will learn how us Nitro CLI for operation (create, manage, and terminate enclaves) and also see how to connect to enclave console if it is running in a debug-mode.
+In this section, you will learn how us Nitro CLI for operation (create, manage, and terminate enclaves) and also see how to connect to enclave console if it is running in a debug-mode.
 
 In this section, you learn how to use the Nitro CLI to build a Docker image of your enclave application, use the Docker image to build your Nitro enclave image file, and then run an enclave using the enclave image file.
 
@@ -54,14 +54,14 @@ For detailed steps on installing the CLI, see [Prerequisites and environment set
 The default values are `512MB` and `2 vCPUs`.
     {{% /notice %}}
 
-1. Let's check available memory and CPU on parent EC2 instance after you have allocated resources to Nitro Enclave. The resources were allocated with default values when you started `nitro-enclaves-allocator` service in pre-requisites section.
+1. Let's check available memory and CPU on the parent EC2 instance after you have allocated resources to Nitro Enclave. The resources were allocated with default values when you started `nitro-enclaves-allocator` service in the pre-requisites section.
     ```sh
     $ free -m
     $ lscpu
     ```
 
     {{% notice info %}}
-The changes require restarting `nitro-enclaves-allocator` service. You should allocate CPU in full cores i.e. 2x vCPU for x86 hyper-threaded instances. 
+The changes require restarting `nitro-enclaves-allocator` service. You should allocate CPU in full cores i.e., 2x vCPU for x86 hyper-threaded instances. 
     {{% /notice %}}
 
 
@@ -83,7 +83,7 @@ The changes require restarting `nitro-enclaves-allocator` service. You should al
     $ docker image ls
     ```
 
-1. Now, let's build the Nitro Enclave image. We'll convert the Docker image to a Nitro Enclave Image File (EIF) by using the `nitro-cli build-enclave` subcommand. The following subcommand builds an enclave image file named `hello.eif`. You can specify either a local directory containing a Dockerfile, or a Docker image in a Docker repository. The subcommand returns a set of measurements (SHA384 hashes) - `PCR0, PCR1 and PCR2` that are unique to the enclave image file. These measurements are provided in the form of Platform Configuration Registers (PCRs). The PCRs are used during the enclave's attestation process.
+1. Now, let's build the Nitro Enclave image. We'll convert the Docker image to a Nitro Enclave Image File (EIF) by using the `nitro-cli build-enclave` subcommand. The following subcommand builds an enclave image file named `hello.eif`. You can specify either a local directory containing a Dockerfile or a Docker image in a Docker repository. The subcommand returns a set of measurements (SHA384 hashes) - `PCR0, PCR1 and PCR2` that are unique to the enclave image file. These measurements are provided in the form of Platform Configuration Registers (PCRs). The PCRs are used during the enclave's attestation process.
 
     <table style="width:100%">
     <tr>
@@ -108,7 +108,7 @@ The changes require restarting `nitro-enclaves-allocator` service. You should al
     </tr>
     </table>
 
-    For example, when using Nitro Enclaves with AWS Key Management Service (KMS), you can specify these PCRs in condition keys for customer managed keys policies. When an application in the enclave performs a supported AWS KMS operation, AWS KMS compares the PCRs in the enclave's signed attestation document with the PCRs specified in the condition keys of the KMS key policy before allowing the operation.
+    For example, when using Nitro Enclaves with AWS Key Management Service (KMS), you can specify these PCRs in condition keys for customer-managed keys policies. When an application in the enclave performs a supported AWS KMS operation, AWS KMS compares the PCRs in the enclave's signed attestation document with the PCRs specified in the condition keys of the KMS key policy before allowing the operation.
 
     {{% notice tip %}}
 You will learn more about the significance of these values in [Cryptographic attestation](cryptographic-attestation.html) section of this module.  
@@ -142,7 +142,7 @@ The `build-enclave` subcommand is not supported on Windows. If you are using a W
 
 ### Run, connect, and terminate the enclave
 
-1. The `run-enclave` subcommand partitions the specified number of vCPUs and the amount of memory from the Amazon EC2 parent instance to create the enclave. You also need to provide an `enclave image file (.eif)` that contains the operating system libraries and the application that you want to run inside the enclave. Run your Enclave application in `debug` mode in development environment to look at the logs. If you need to access the enclave console to see the application logs, so you must include the `--debug-mode` option. The allocated memory should be greater than four times of the `EIF` file size. This means you have to update the value of `memory_mib` to `3072` in `/etc/nitro_enclaves/allocator.yaml` file. Furthermore, restart Nitro Enclave Service `nitro-enclaves-allocator` to reflect the latest memory values. You can optionally specify `EnclaveCID` i.e. the socket address used by the `vsock` socket. Only `CIDs` of 4 and higher can be specified. If you omit this option, a random `CID` is allocated to the enclave. You will learn more about `vsock` i.e. secure local channel in the next module.
+1. The `run-enclave` subcommand partitions the specified number of vCPUs and the amount of memory from the Amazon EC2 parent instance to create the enclave. You also need to provide an `enclave image file (.eif)` that contains the operating system libraries and the application that you want to run inside the enclave. Run your Enclave application in `debug` mode in the development environment to look at the logs. If you need to access the enclave console to see the application logs, so you must include the `--debug-mode` option. The allocated memory should be greater than four times of the `EIF` file size. This means you have to update the value of `memory_mib` to `3072` in `/etc/nitro_enclaves/allocator.yaml` file. Furthermore, restart Nitro Enclave Service `nitro-enclaves-allocator` to reflect the latest memory values. You can optionally specify `EnclaveCID` i.e. the socket address used by the `vsock` socket. Only `CIDs` of 4 and higher can be specified. If you omit this option, a random `CID` is allocated to the enclave. You will learn more about `vsock`, i.e. secure local channel in the next module.
 
     ```sh
     $ sudo systemctl stop nitro-enclaves-allocator.service
@@ -254,7 +254,7 @@ For additional details on the Nitro Enclaves CLI subcommands, see [Documentation
 
 ### Summary
 
-You have now seen how to build and run a simple Enclave application. Feel free to explore the code for this section. Then, proceed to the next section to learn about the `vsock` communication channel between the parent instance and the Enclave.
+You have now seen how to build and run a simple Enclave application. Feel free to explore the code for this section. Then, proceed to the next section to learn about the `vsock` communication channel between the parent instance and the Nitro Enclave.
 
 ---
 #### Proceed to the [Secure local channel](secure-local-channel.html) section to continue the workshop.
