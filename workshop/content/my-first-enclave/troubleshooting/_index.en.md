@@ -44,7 +44,7 @@ Since the total size of the uncompressed enclave image file (EIF) is larger than
 
 The **output** should look similar to
 <pre>
-[ E26 ] Insufficient memory requested. User-provided `memory` is 512 MB, but based on the EIF file size, the minimum memory should be 2148 MB
+[ E26 ] Insufficient memory requested. User provided `memory` is 512 MB, but based on the EIF file size, the minimum memory should be 2148 MB
 
 For more details, please visit https://docs.aws.amazon.com/enclaves/latest/user/cli-errors.html#E26
 
@@ -73,7 +73,7 @@ Since we allocated `512MiB` for the enclave from the parent EC2 instance and tri
 The **output** should look similar to
 <pre>
 Start allocating memory...
-[ E27 ] Insufficient memory available. User-provided `memory` is 3072 MB, which is more than the available hugepage memory.
+[ E27 ] Insufficient memory available. User provided `memory` is 3072 MB, which is more than the available hugepage memory.
 You can increase the available memory by editing the `memory_mib` value from '/etc/nitro_enclaves/allocator.yaml' and then enable the nitro-enclaves-allocator.service.
 
 For more details, please visit https://docs.aws.amazon.com/enclaves/latest/user/cli-errors.html#E27
