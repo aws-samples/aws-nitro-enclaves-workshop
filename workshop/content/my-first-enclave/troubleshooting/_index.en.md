@@ -68,7 +68,7 @@ Attempt to run the enclave with more memory:
 $ nitro-cli run-enclave --cpu-count 2 --memory 3072 --eif-path ./data-processing.eif
 ```
 
-Since we allocated `512MiB` for the enclave from the parent EC2 instance and tried to running the enclave with `3072MiB`, we expect this to fail:
+Since we allocated `512MiB` for the enclave from the parent EC2 instance and tried to run the enclave with `3072MiB`, we expect this to fail:
 
 The **output** should look similar to
 <pre>
@@ -95,7 +95,7 @@ Similar to the memory errors above, there are also a set of errors for when you 
 {{% /notice %}}
 #### Nitro Enclaves CLI error codes
 
-The Nitro Enclaves CLI includes the `explain` subcommand which displays detailed information. You can use this to print information locally about the error. For example:
+The Nitro Enclaves CLI includes the `explain` subcommand, which displays detailed information. You can use this to print information locally about the error. For example:
 
 ```sh
 $ nitro-cli explain --error-code E26
