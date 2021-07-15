@@ -287,10 +287,10 @@ To add attestation conditions to your key policy:
     <!-- Please don't change indentation on JSON block below since we are making it neatly copy-pasteable. -->
     ```
     "Condition": {
-                "StringEqualsIgnoreCase": {
-                    "kms:RecipientAttestation:PCR0": "EXAMPLEbc2ecbb68ed99a13d7122abfc0666b926a79d5379bc58b9445c84217f59cfdd36c08b2c79552928702EXAMPLE"
-                }
-            }
+                  "StringEqualsIgnoreCase": {
+                      "kms:RecipientAttestation:PCR0": "EXAMPLEbc2ecbb68ed99a13d7122abfc0666b926a79d5379bc58b9445c84217f59cfdd36c08b2c79552928702EXAMPLE"
+                  }
+              }
     ```
 
 6. Replace the placeholder value `EXAMPLEbc2ecbb68ed99a13d7122abfc0666b926a79d5379bc58b9445c84217f59cfdd36c08b2c79552928702EXAMPLE` with the PCR0 value that you saved when building your enclave.
