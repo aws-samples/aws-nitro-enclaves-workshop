@@ -171,88 +171,84 @@ To prepare a new key policy for your CMK:
 
 1. Delete the entire key policy and paste your new key policy in its place and then choose **Save changes**.
 
-### Build your enclave image file
+### Build, run, and connect to your enclave in debug mode
 
-To build your enclave image file execute the following command:
-```sh
-$ nitro-cli build-enclave --docker-uri "data-processing:latest" --output-file "data-processing.eif"
-```
+1. Create a new terminal tab on your Cloud9 environment.
 
-The **output** should look similar to
-<pre>
-Enclave Image successfully created.
-{
-  "Measurements": {
-    "HashAlgorithm": "Sha384 { ... }",
-    "PCR0": "287b24930a9f0fe14b01a71ecdc00d8be8fad90f9834d547158854b8279c74095c43f8d7f047714e98deb7903f20e3dd",
-    "PCR1": "aca6e62ffbf5f7deccac452d7f8cee1b94048faf62afc16c8ab68c9fed8c38010c73a669f9a36e596032f0b973d21895",
-    "PCR2": "0315f483ae1220b5e023d8c80ff1e135edcca277e70860c31f3003b36e3b2aaec5d043c9ce3a679e3bbd5b3b93b61d6f"
-  }
-}
-</pre>
+1. Build your enclave image file by executing the following command:
+    ```sh
+    $ nitro-cli build-enclave --docker-uri "data-processing:latest" --output-file "data-processing.eif"
+    ```
 
-Save this into a new file.
+    The **output** should look similar to
+    <pre>
+    Enclave Image successfully created.
+    {
+    "Measurements": {
+        "HashAlgorithm": "Sha384 { ... }",
+        "PCR0": "287b24930a9f0fe14b01a71ecdc00d8be8fad90f9834d547158854b8279c74095c43f8d7f047714e98deb7903f20e3dd",
+        "PCR1": "aca6e62ffbf5f7deccac452d7f8cee1b94048faf62afc16c8ab68c9fed8c38010c73a669f9a36e596032f0b973d21895",
+        "PCR2": "0315f483ae1220b5e023d8c80ff1e135edcca277e70860c31f3003b36e3b2aaec5d043c9ce3a679e3bbd5b3b93b61d6f"
+    }
+    }
+    </pre>
 
-<!-- TODO: improve the approach here -->
+    <!-- TODO: improve the approach here -->
 
-{{% notice info %}}
+    {{% notice info %}}
 Please be sure to carefully save these measurements for later reference as they are critical for this section.
-{{% /notice %}}
+    {{% /notice %}}
 
 
-<!-- Hide vsock-proxy start section as it is done in the previous chapter.
+    <!-- Hide vsock-proxy start section as it is done in the previous chapter.
 
-### Start your vsock proxy
+    ### Start your vsock proxy
 
-The default configuration for the vsock-proxy service permits the enclave to communicate with AWS KMS endpoints in supported regions.
+    The default configuration for the vsock-proxy service permits the enclave to communicate with AWS KMS endpoints in supported regions.
 
-To start the vsock-proxy service on the parent instance with the default configuration, issue the following command in your Cloud9 terminal:
-```sh
-$ systemctl start nitro-enclaves-vsock-proxy.service
-```
--->
+    To start the vsock-proxy service on the parent instance with the default configuration, issue the following command in your Cloud9 terminal:
+    ```sh
+    $ systemctl start nitro-enclaves-vsock-proxy.service
+    ```
+    -->
 
-### Start your enclave
+1. Launch your enclave application by executing the following command in your Cloud9 terminal:
+    ```sh
+    $ cd ~/environment/aws-nitro-enclaves-workshop/resources/code/my-first-enclave/cryptographic-attestation
+    $ nitro-cli run-enclave --debug-mode --cpu-count 2 --memory 2148 --eif-path "./data-processing.eif"
+    ```
 
-To launch your enclave application execute the following command in your Cloud9 terminal:
-```sh
-$ nitro-cli run-enclave --debug-mode --cpu-count 2 --memory 2148 --eif-path "./data-processing.eif"
-```
+1. Connect to your enclave console by issuing the following command:
+    ```sh
+    $ ENCLAVE_ID=`nitro-cli describe-enclaves | jq -r ".[0].EnclaveID"`
+    $ [ "$ENCLAVE_ID" != "null" ] && nitro-cli console --enclave-id ${ENCLAVE_ID}
+    ```
 
-### Connecting to your enclave console in debug mode
-
-To connect to your enclave console issue the following command in your Cloud9 a new terminal window:
-```sh
-$ cd ~/environment/aws-nitro-enclaves-workshop/resources/code/my-first-enclave/cryptographic-attestation
-$ ENCLAVE_ID=`nitro-cli describe-enclaves | jq -r ".[0].EnclaveID"`
-$ [ "$ENCLAVE_ID" != "null" ] && nitro-cli console --enclave-id ${ENCLAVE_ID}
-```
-
+    This terminal tab will now display the debug-mode console output of the running enclave.
 
 ### Interacting with your enclave application
 
-To install dependencies, issue the following command in your other Cloud9 terminal:
-```sh
-$ pip3 install --user -r "requirements.txt"
-```
+1. Return to your previous Cloud9 terminal tab and install dependencies by issuing the following command:
+    ```sh
+    $ cd ~/environment/aws-nitro-enclaves-workshop/resources/code/my-first-enclave/cryptographic-attestation
+    $ pip3 install --user -r "requirements.txt"
+    ```
 
-<!-- TODO: view values.txt -->
+    <!-- TODO: view values.txt -->
 
-To select a simulated sensitive value from `values.txt` at random and encrypt it using your KMS CMK, issue the following command in your Cloud9 terminal:
+1. Select a simulated sensitive value from `values.txt` at random and encrypt it using your KMS CMK by issuing the following command:
+    ```sh
+    $ python3 client.py --prepare --values "values.txt"  --alias "my-enclave-key"
+    ```
 
-```sh
-$ python3 client.py --prepare --values "values.txt"  --alias "my-enclave-key"
-```
+    If successful, this command will print the encrypted ciphertext for the selected value and its last four digits to your screen. It will also create a new file, `string.encrypted`, containing the cyphertext.
 
-Suppose successful this command will print the encrypted ciphertext for the selected value and its last four digits to your screen. It will also create a new file, `string.encrypted`, containing the cyphertext.
+1. Send this ciphertext to your enclave by issuing the following command:
+    ```sh
+    $ python3 client.py --submit --ciphertext "string.encrypted"  --alias "my-enclave-key"
+    ```
 
-To send this cyphertext into your enclave, issue the following command in your Cloud9 terminal:
-
-```sh
-$ python3 client.py --submit --ciphertext "string.encrypted"  --alias "my-enclave-key"
-```
-
-In your host instance terminal, you'll see that the last 4 digits of the sensitive value are returned to the parent.
+    In your host instance terminal, you'll see that the last 4 digits of the sensitive value are returned to the parent.
 
 ### Taking advantage of cryptographic attestation
 
@@ -288,14 +284,14 @@ To add attestation conditions to your key policy:
 
 5. Copy the following text and paste it into your Cloud9 editor.
 
-<!-- Please don't change indentation on JSON block below since we are making it neatly copy-pasteable. -->
-```
-"Condition": {
-              "StringEqualsIgnoreCase": {
-                  "kms:RecipientAttestation:PCR0": "EXAMPLEbc2ecbb68ed99a13d7122abfc0666b926a79d5379bc58b9445c84217f59cfdd36c08b2c79552928702EXAMPLE"
-              }
-          }
-```
+    <!-- Please don't change indentation on JSON block below since we are making it neatly copy-pasteable. -->
+    ```
+    "Condition": {
+                "StringEqualsIgnoreCase": {
+                    "kms:RecipientAttestation:PCR0": "EXAMPLEbc2ecbb68ed99a13d7122abfc0666b926a79d5379bc58b9445c84217f59cfdd36c08b2c79552928702EXAMPLE"
+                }
+            }
+    ```
 
 6. Replace the placeholder value `EXAMPLEbc2ecbb68ed99a13d7122abfc0666b926a79d5379bc58b9445c84217f59cfdd36c08b2c79552928702EXAMPLE` with the PCR0 value that you saved when building your enclave.
 
