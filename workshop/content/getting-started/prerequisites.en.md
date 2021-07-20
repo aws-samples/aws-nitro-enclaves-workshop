@@ -85,7 +85,7 @@ For additional details, see [Documentation](https://docs.aws.amazon.com/enclaves
 
 1. Use `git clone` to download a copy of this workshop's repository. This repo includes the content used in subsequent modules.
     ```sh
-    $ git clone https://github.com/aws-samples/aws-nitro-enclaves-workshop.git
+    $ git clone --depth 1 https://github.com/aws-samples/aws-nitro-enclaves-workshop.git
     ```
 
 ---
