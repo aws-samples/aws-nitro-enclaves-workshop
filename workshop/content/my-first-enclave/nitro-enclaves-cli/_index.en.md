@@ -11,10 +11,8 @@ In this section, you will learn how us Nitro CLI for operation (create, manage, 
 
 In this section, you learn how to use the Nitro CLI to build a Docker image of your enclave application, use the Docker image to build your Nitro enclave image file, and then run an enclave using the enclave image file.
 
-![Nitro Enclave Build Process.](/images/build-eif.png)
-    {{% notice note %}}
-Nitro Enclaves uses Docker images as a convenient file format for packaging your applications. Docker images are typically used to create Docker containers. However, in this case, you use the Docker image to create an enclave image file instead.
-    {{% /notice %}}
+![Architecture diagram](/images/nitro-enclaves-cli-arch.png)
+
 ### Verify Nitro Enclave resources
 
 1. Let's verify that Nitro Enclaves CLI is installed correctly.
@@ -66,6 +64,11 @@ The changes require restarting `nitro-enclaves-allocator` service. You should al
 
 
 ### Build Nitro Enclave Image File
+
+![Nitro enclave build process](/images/build-eif.png)
+{{% notice note %}}
+Nitro Enclaves uses Docker images as a convenient file format for packaging your applications. Docker images are typically used to create Docker containers. However, in this case, you use the Docker image to create an enclave image file instead.
+{{% /notice %}}
 
 1. Let's build a Docker image for your sample application. For this section, we'll use a simple Python implementation of `Hello World` to get started.
     ```sh
