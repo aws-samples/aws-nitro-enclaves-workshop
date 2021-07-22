@@ -7,6 +7,8 @@ weight = 14
 
 In this section, you will gain experience with a sample sensitive data processing application that makes use of Nitro Enclaves cryptographic attestation and AWS KMS to isolate sensitive data processing within the boundary of your enclave. This sample demonstrates how cryptographic attestation can be used to protect the privacy of sensitive data. Initially, you will build and deploy this sample application without taking advantage of cryptographic attestation in order to understand its operation. In the second phase of this section, you will enable cryptographic attestation and observe how it can be used to enhance the isolation of sensitive data processing workloads in a Nitro Enclave.
 
+![Architecture diagram](/images/cryptographic-attestation-arch.png)
+
 ### A unique feature on Nitro Enclaves
 
 Using the Nitro Enclaves SDK, an enclave can request a cryptographically signed attestation document from the Nitro Hypervisor that includes its unique measurements. The enclave uses the attestation process to prove its identity and build trust with an external service using a series of measurements that are unique to an enclave.

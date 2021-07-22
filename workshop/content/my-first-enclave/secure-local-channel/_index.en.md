@@ -9,7 +9,7 @@ In this section, you will set up communication between the Nitro Enclave and an 
 In this example, you will call a sample server application running inside the Nitro Enclave and configure a forwarder with vsock-proxy to allow the enclave to reach out to the external website.
 The client application will be reaching out to a server, running inside the Nitro Enclave, and listening on port `5005`. Local loopback will forward all traffic from the server to the Traffic-Forwarder (on port `443`) and from there to the vsock-proxy (on port `8001`). The vsock-proxy routes the traffic to the target external endpoint. And rolling back response will trickle back to the client application. Both types of calls (client-server and enclave-endpoint) will go through the vsock socket.
 
-![Networks communication diagram.](/images/secure-socket-proxy.png)
+![Architecture diagram](/images/secure-local-channel-arch.png)
 
 
 {{% notice info %}}
