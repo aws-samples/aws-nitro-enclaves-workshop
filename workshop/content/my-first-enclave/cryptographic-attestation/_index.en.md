@@ -196,7 +196,7 @@ Please be sure to carefully save these measurements for later reference as they 
 1. Launch your enclave application by executing the following command in your Cloud9 terminal:
     ```sh
     $ cd ~/environment/aws-nitro-enclaves-workshop/resources/code/my-first-enclave/cryptographic-attestation
-    $ nitro-cli run-enclave --debug-mode --cpu-count 2 --memory 2148 --eif-path "./data-processing.eif"
+    $ nitro-cli run-enclave --debug-mode --cpu-count 2 --memory 2500 --eif-path "./data-processing.eif"
     ```
 
 1. Connect to your enclave console by issuing the following command:
@@ -321,7 +321,7 @@ To confirm that your enclave is still able to decrypt when launched in productio
 
 1. Launch the enclave in production mode by issuing the following command in your Cloud9 terminal:
     ```sh
-    $ nitro-cli run-enclave --cpu-count 2 --memory 2148 --eif-path "./data-processing.eif"
+    $ nitro-cli run-enclave --cpu-count 2 --memory 2500 --eif-path "./data-processing.eif"
     ```
 
 1. Submit your encrypted value to the enclave by issuing the following command in a separate Cloud9 terminal window:
@@ -357,7 +357,7 @@ $ sed -i "s|\[-4:\]||" ./server.py
 
 After running this command `server.py` will now look like this:
 
-```python {linenos=true, hl_lines=[1] linenostart=777}
+```python {linenos=true, hl_lines=[1] linenostart=77}
     last_four = str(plaintext)
     r["last_four"] = last_four
 
@@ -391,12 +391,12 @@ If you carefully note the measurements returned to your terminal window and comp
 
 1. Launch a new enclave with the EIF you just built by issuing the following command in your Cloud9 terminal:
     ```sh
-    $ nitro-cli run-enclave --cpu-count 2 --memory 2148 --eif-path "./data-processing-modified.eif"
+    $ nitro-cli run-enclave --cpu-count 2 --memory 2500 --eif-path "./data-processing-modified.eif"
     ```
 
 1. Submit your ciphertext to the updated enclave, which is now programmed to return the entire plaintext produced by decrypting the provided ciphertext by issuing the following command in your Cloud9 terminal:
     ```sh
-    $ python3 client.py --submit --ciphertext "string.encrypted"  --alias "my-enclave-key"
+    $ python3 client.py --submit --ciphertext "string.encrypted" --alias "my-enclave-key"
     ```
 
 Fortunately, the security model of our application protects the privacy of the simulated sensitive value and fails to return the plaintext to the parent instance even after the `server.py` program in the enclave was modified to do so. The reason that the modified program cannot return the plaintext value is that it was unable to decrypt the value in the first place due to cryptographic attestation. When you changed the program and rebuilt the EIF it generated a new PCR0 value. When the enclave program called `KMS:Decrypt` it was denied because the signed attestation document it provided did not contain a PCR0 value that matched the PCR0 for the approved EIF you configured KMS to allow decrypt permission for.
