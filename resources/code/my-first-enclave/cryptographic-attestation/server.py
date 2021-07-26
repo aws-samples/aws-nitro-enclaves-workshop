@@ -41,8 +41,6 @@ def decrypt_cipher(access, secret, token, ciphertext, region):
     stdout=subprocess.PIPE,
     stderr=subprocess.PIPE
 )
-    b64text = proc.communicate()[0].decode()
-    plaintext = json.loads(base64.b64decode(b64text))
 
     ret = proc.communicate()
 
