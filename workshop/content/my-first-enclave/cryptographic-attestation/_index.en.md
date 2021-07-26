@@ -340,7 +340,7 @@ So far in this section, you've explored the base functionality of this sensitive
 
 The enclave application file `server.py` contains the following code:
 
-```python {linenos=true, linenostart=79}
+```python {linenos=true, linenostart=77}
     last_four = str(plaintext)[-4:]
     r["last_four"] = last_four
 
@@ -349,7 +349,7 @@ c.send(str.encode(json.dumps(r)))
 c.close()
 ```
 
-The trailing `[-4:]` on line 64 of `servery.py` is responsible for ensuring that the program returns only the last four numbers of the plaintext value. To modify this code to return the entire plaintext value to the parent over the vsock, issue the following command in your Cloud9 terminal:
+The trailing `[-4:]` on line 77 of `server.py` is responsible for ensuring that the program returns only the last four numbers of the plaintext value. To modify this code to return the entire plaintext value to the parent over the vsock, issue the following command in your Cloud9 terminal:
 
 ```sh
 $ sed -i "s|\[-4:\]||" ./server.py
@@ -357,7 +357,7 @@ $ sed -i "s|\[-4:\]||" ./server.py
 
 After running this command `server.py` will now look like this:
 
-```python {linenos=true, hl_lines=[1] linenostart=79}
+```python {linenos=true, hl_lines=[1] linenostart=777}
     last_four = str(plaintext)
     r["last_four"] = last_four
 
