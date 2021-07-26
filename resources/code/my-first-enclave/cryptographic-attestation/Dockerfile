@@ -69,9 +69,9 @@ RUN cmake3 -DCMAKE_PREFIX_PATH=/usr -DCMAKE_INSTALL_PREFIX=/usr -GNinja \
 RUN cmake3 --build aws-nitro-enclaves-sdk-c/build --target install
 RUN cmake3 --build aws-nitro-enclaves-sdk-c/build --target docs
 
-# Test
-FROM builder as test
-RUN cmake3 --build aws-nitro-enclaves-sdk-c/build --target test
+# # Test
+# FROM builder as test
+# RUN cmake3 --build aws-nitro-enclaves-sdk-c/build --target test
 
 
 

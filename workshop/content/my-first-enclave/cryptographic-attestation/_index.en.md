@@ -43,26 +43,8 @@ The business logic of this application is written in Python. If time allows, ple
 to understand the internal functioning of this sample. The client component that runs on the parent instance is contained within the `client.py` file and the server component that runs inside the enclave is contained within the `server.py` file.
 {{% /notice %}}
 
-### Packaging your enclave application as a docker image
-
-Nitro Enclaves use the docker images as a convenient format for packaging the applications you wish to launch in an enclave.
-
-To package the code for this sample application into a docker image:
-
-1. Click into your Cloud 9 terminal window
-
-1. Change directory to the code directory for the My First Enclave module by entering the following command:
-    ```sh
-    $ cd ~/environment/aws-nitro-enclaves-workshop/resources/code/my-first-enclave/cryptographic-attestation
-    ```
-
-1. Initiate the image build process by entering the following command:
-    ```sh
-    $ docker build ./ -t "data-processing"
-    ```
-
-{{% notice tip %}}
-The docker build process will take a few minutes to complete, so you should continue to the section below while you wait for it to complete. To do so, leave your current terminal open and create a new terminal tab in Cloud9. Click into this new terminal and run the command in Step 2 above again.
+{{% notice warning %}}
+This section expects that you have already compiled the sample application dependencies and built a docker image for the server component of this application that runs inside the enclave. If you have not yet completed this step please return the [prerequisites section of the Getting Started module](../getting-started/prerequisites.html#compile-the-dependencies-for-the-cryptographic-attestation-sample-application) and do so.
 {{% /notice %}}
 
 ### Create a KMS CMK

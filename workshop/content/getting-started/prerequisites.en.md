@@ -9,6 +9,7 @@ You will be using AWS Cloud9 IDE as a development environment to streamline the 
 * [Disable AWS managed temporary credentials](#disable-aws-managed-temporary-credentials)
 * [Install and configure Nitro Enclaves CLI and tools](#install-and-configure-nitro-enclaves-cli-and-tools)
 * [Clone the workshop repository](#clone-the-workshop-repository)
+* [Compile the dependencies for the cryptographic attestation sample application](#compile-the-dependencies-for-the-cryptographic-attestation-sample-application)
 
 ### Disable AWS managed temporary credentials
 
@@ -87,6 +88,34 @@ For additional details, see [Documentation](https://docs.aws.amazon.com/enclaves
     ```sh
     $ git clone --depth 1 https://github.com/aws-samples/aws-nitro-enclaves-workshop.git
     ```
+
+{{% notice note %}}
+If you intend to complete the [cryptographic attestation](../my-first-enclave/cryptographic-attestation.html) section of the [My First Enclave](../my-first-enclave.html) module you must complete the following steps. If you do not wish to complete this section, you may proceed to the [My First Enclave](../my-first-enclave.html) module to continue the workshop.
+{{% /notice %}}
+
+### Compile the dependencies for the cryptographic attestation sample application
+
+Nitro Enclaves use docker images as a convenient format for packaging the applications you wish to launch in an enclave. The docker image used for the sample application in the [cryptographic attestation](../my-first-enclave/cryptographic-attestation.html) section of the [My First Enclave](../my-first-enclave.html) module has dependencies that must be compiled.
+
+To package the code for this sample application into a docker image:
+
+1. Click into your Cloud 9 terminal window
+
+1. Open a new terminal tab.
+
+1. Change directory to the code directory for the My First Enclave module by entering the following command:
+    ```sh
+    $ cd ~/environment/aws-nitro-enclaves-workshop/resources/code/my-first-enclave/cryptographic-attestation
+    ```
+
+1. Initiate the image build process by entering the following command:
+    ```sh
+    $ docker build ./ -t "data-processing"
+    ```
+
+{{% notice tip %}}
+The docker build process will take a few minutes to complete, so you should continue with the workshop while you wait for it to complete. To do so, leave your current terminal open and return to your previous terminal tab in Cloud9.
+{{% /notice %}}
 
 ---
 #### Proceed to the [My First Enclave](../my-first-enclave.html) module to continue the workshop.
