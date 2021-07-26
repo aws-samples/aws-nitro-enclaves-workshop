@@ -29,6 +29,8 @@ You can integrate cryptographic attestation with your own applications and also 
 This module is intended to demonstrate the properties of Nitro Enclaves and offer hands-on experience with the Nitro Enclaves development experience. The module is designed as a teaching tool, and it does not represent an example of security best practices for a production Nitro Enclaves application architecture.
 {{% /notice %}}
 
+![Architecture diagram](/images/cryptographic-attestation-arch.png)
+
 The application you will build in this module consists of a server component that will run inside your Nitro Enclave and a client component that will be executed on your parent instance. The client component operates in two phases: data preparation and data submission.
 
 In the data preparation phase, the client component of your application reads an input file containing simulated strings that stand in for sensitive values such as credit card or social security numbers. To prepare this data for later processing, the client component selects one of these values at random, encrypts it using an [AWS Key Management Service (KMS)](https://aws.amazon.com/kms/) customer master key (CMK).
@@ -40,9 +42,6 @@ The business logic of this application is written in Python. If time allows, ple
 `~/environment/aws-nitro-enclaves-workshop/resources/code/my-first-enclave/cryptographic-attestation`  
 to understand the internal functioning of this sample. The client component that runs on the parent instance is contained within the `client.py` file and the server component that runs inside the enclave is contained within the `server.py` file.
 {{% /notice %}}
-
-
-<!-- TODO Diagram -->
 
 {{% notice warning %}}
 This section expects that you have already compiled the sample application dependencies and built a docker image for the server component of this application that runs inside the enclave. If you have not yet completed this step please return the [prerequisites section of the Getting Started module](../getting-started/prerequisites.html#compile-the-dependencies-for-the-cryptographic-attestation-sample-application) and do so.
