@@ -4,7 +4,7 @@ weight: 30
 ---
 
 
-You will be using AWS Cloud9 IDE as a development environment to streamline the process. Now that you have it created, we can install the prerequisites we'll use throughout the workshop. These prerequisites will include:
+You will be using AWS Cloud9 IDE as a development environment to streamline the process. Now that you have the _Nitro Enclaves Workshop_ Cloud9 IDE open, we can install the prerequisites we'll use throughout the workshop. These prerequisites will include:
 
 * [Disable AWS managed temporary credentials](#disable-aws-managed-temporary-credentials)
 * [Install and configure Nitro Enclaves CLI and tools](#install-and-configure-nitro-enclaves-cli-and-tools)
@@ -22,7 +22,7 @@ You will be using AWS Cloud9 IDE as a development environment to streamline the 
 
 ### Install and configure Nitro Enclaves CLI and tools
 {{% notice note %}}
-You do not have to be in any specific folder as by default CLI tool will be installed in `build/install`. Learn more in [Documentation](https://github.com/aws/aws-nitro-enclaves-cli)
+The majority of the commands during this workshop will be run in terminal sessions within your AWS Cloud9 IDE. To start a new terminal session, on the menu bar, choose **Window**, **New Terminal**.
 {{% /notice %}}
 
 1. Install the Nitro Enclaves CLI, which will enable you to run enclaves.
@@ -99,9 +99,7 @@ Nitro Enclaves use docker images as a convenient format for packaging the applic
 
 To package the code for this sample application into a docker image:
 
-1. Click into your Cloud 9 terminal window
-
-1. Open a new terminal tab.
+1. Start a new terminal session. (To start a new terminal session, on the menu bar, choose **Window**, **New Terminal**.)
 
 1. Change directory to the code directory for the My First Enclave module by entering the following command:
     ```sh
@@ -114,7 +112,7 @@ To package the code for this sample application into a docker image:
     ```
 
 {{% notice tip %}}
-The docker build process will take a few minutes to complete, so you should continue with the workshop while you wait for it to complete. To do so, leave your current terminal open and return to your previous terminal tab in Cloud9.
+It's expected to see some red text output during this build process. The `docker build` process will take up to 15 minutes to complete, so you should continue with the workshop while it builds. To do so, leave your current terminal session open and return to your previous terminal session in your Cloud9 IDE.
 {{% /notice %}}
 
 ---

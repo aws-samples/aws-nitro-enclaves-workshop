@@ -154,7 +154,7 @@ To prepare a new key policy for your CMK:
 
 ### Build, run, and connect to your enclave in debug mode
 
-1. Create a new terminal tab on your Cloud9 environment.
+1. Start a new terminal session. (To start a new terminal session, on the menu bar, choose **Window**, **New Terminal**.)
 
 1. Build your enclave image file by executing the following command:
     ```sh
@@ -201,7 +201,7 @@ Please be sure to carefully save these measurements for later reference as they 
 
 1. Connect to your enclave console by issuing the following command:
     ```sh
-    $ ENCLAVE_ID=`nitro-cli describe-enclaves | jq -r ".[0].EnclaveID"`
+    $ ENCLAVE_ID=$(nitro-cli describe-enclaves | jq -r ".[0].EnclaveID")
     $ [ "$ENCLAVE_ID" != "null" ] && nitro-cli console --enclave-id ${ENCLAVE_ID}
     ```
 
@@ -315,7 +315,7 @@ To confirm that your enclave is still able to decrypt when launched in productio
 
 1. Terminate your enclave by issuing the following command in your Cloud9 terminal:
     ```sh
-    $ ENCLAVE_ID=`nitro-cli describe-enclaves | jq -r ".[0].EnclaveID"`
+    $ ENCLAVE_ID=$(nitro-cli describe-enclaves | jq -r ".[0].EnclaveID")
     $ [ "$ENCLAVE_ID" != "null" ] && nitro-cli terminate-enclave --enclave-id ${ENCLAVE_ID}
     ```
 
@@ -384,7 +384,7 @@ If you carefully note the measurements returned to your terminal window and comp
 
 1. Terminate your running enclave by issuing the following command in your Cloud9 terminal:
     ```sh
-    $ ENCLAVE_ID=`nitro-cli describe-enclaves | jq -r ".[0].EnclaveID"`
+    $ ENCLAVE_ID=$(nitro-cli describe-enclaves | jq -r ".[0].EnclaveID")
     $ [ "$ENCLAVE_ID" != "null" ] && nitro-cli terminate-enclave --enclave-id ${ENCLAVE_ID}
     ```
 

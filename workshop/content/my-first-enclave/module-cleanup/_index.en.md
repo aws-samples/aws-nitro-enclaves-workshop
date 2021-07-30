@@ -10,7 +10,7 @@ If this is the last module you will be executing, please go to the [Cleanup](../
 
 * Terminate the running enclave.
     ```sh
-    $ ENCLAVE_ID=`nitro-cli describe-enclaves | jq -r ".[0].EnclaveID"`
+    $ ENCLAVE_ID=$(nitro-cli describe-enclaves | jq -r ".[0].EnclaveID")
     $ [ "$ENCLAVE_ID" != "null" ] && nitro-cli terminate-enclave --enclave-id ${ENCLAVE_ID}
     ```
 

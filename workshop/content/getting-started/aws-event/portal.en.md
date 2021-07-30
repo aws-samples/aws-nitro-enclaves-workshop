@@ -20,6 +20,10 @@ Click on **AWS Console** on the dashboard.
 
 ![Event Engine AWS Console](/images/event-engine-aws-console.png)
 
+{{% notice warning %}}
+The AWS Region you will use for your workshop may vary from the screenshot above. Check with your instructor if you have any questions.
+{{% /notice %}}
+
 Take the defaults and click on **Open AWS Console**. This will open AWS Console in a new browser tab.
 
 Navigate to the AWS Cloud9 console to view and open your environment IDE.

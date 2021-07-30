@@ -8,7 +8,7 @@ Now that you've had a chance to learn about cryptographic attestation with AWS K
 
 Let's terminate any enclaves that are running by first describing them and then terminating them:
 ```sh
-$ ENCLAVE_ID=`nitro-cli describe-enclaves | jq -r ".[0].EnclaveID"`
+$ ENCLAVE_ID=$(nitro-cli describe-enclaves | jq -r ".[0].EnclaveID")
 $ [ "$ENCLAVE_ID" != "null" ] && nitro-cli terminate-enclave --enclave-id ${ENCLAVE_ID}
 ```
 
