@@ -38,87 +38,88 @@ You can find the complete code of Traffic-Forwarder in `code/traffic_forwarder.p
 This configuration will allow Traffic-Forwarder to route the traffic to vsock-proxy.
 
 
-### Run Proxy
-In the Prerequisites section, you already built and configured a vsock-proxy. You can validate if it is available in the system by running this command:
-```sh
-$ vsock-proxy --help
-```
-Take a look at the parameters that you can use to run the vsock-proxy.
+### Run VSOCK Proxy
+1. In the Prerequisites section, you already installed and configured `vsock-proxy` as part of the Nitro Enclaves CLI installation. You can validate if `vsock-proxy` is available in the system by executing the following command:
+    ```sh
+    $ vsock-proxy --help
+    ```
+    Take a look at the parameters that you can use to run the `vsock-proxy`.
 
-{{% notice info %}}
-Outside of this workshop, you can install CLI and vsock-proxy both from source code and the Amazon Linux repository. See [Nitro Cli Github Repo](https://github.com/aws/aws-nitro-enclaves-cli) for more details.
-{{% /notice %}}
+    {{% notice info %}}
+Outside of this workshop, you can install CLI and `vsock-proxy` both from source code and the Amazon Linux repository. See [Nitro Enclaves CLI GitHub repository](https://github.com/aws/aws-nitro-enclaves-cli) for more details.
+    {{% /notice %}}
 
-By default, the provided vsock-proxy allows routing of traffic only to port 443 of different KMS endpoints in regions all over the globe. It is done through a config file (that you can see at `/etc/vsock_proxy/config.yaml`) through an allowlist. But for our example, we will point the proxy to a different website. You can use the `vsock-proxy.yaml` with sample code or create your custom file by running these commands:
+1. By default, the provided `vsock-proxy` allows routing of traffic only to port `443` of different KMS endpoints in regions all over the globe. It is done through a config file (that you can see at `/etc/vsock_proxy/config.yaml`) through an allowlist. But for our example, we will point the proxy to a different web endpoint. You can use the `vsock-proxy.yaml` with sample code or create your custom file by running these commands:
+    ```sh
+    $ echo "allowlist:" >> your-vsock-proxy.yaml
+    $ echo "- {address: ip-ranges.amazonaws.com, port: 443}" >> your-vsock-proxy.yaml
+    ```
+    The config file create with the commands above will allow `vsock-proxy` to route traffic to `ip-ranges.amazonaws.com` on port 443.
 
-```sh
-$ echo "allowlist:" >> your-vsock-proxy.yaml
-$ echo "- {address: ip-ranges.amazonaws.com, port: 443}" >> your-vsock-proxy.yaml
-```
-
-Such config file will allow proxy to route traffic to `ip-ranges.amazonaws.com` on port 443.
-
-Start proxy with next command (you can pass name of your config file as a parameter.):
-
-```sh
-$ vsock-proxy 8001 ip-ranges.amazonaws.com 443 --config your-vsock-proxy.yaml
-```
+1. Start `vsock-proxy` with the following command (you can pass name of your config file as a parameter):
+    ```sh
+    $ vsock-proxy 8001 ip-ranges.amazonaws.com 443 --config your-vsock-proxy.yaml
+    ```
 
 ### Run Server Application 
-With vsock-proxy running in the current terminal window, please create a new terminal window to run server application, navigate to `secure-local-channel`
+1. With vsock-proxy running in the current terminal session, start a new terminal session to run server application. (To start a new terminal session, on the menu bar, choose **Window**, **New Terminal**.)
 
-```sh
-$ cd ~/environment/aws-nitro-enclaves-workshop/resources/code/my-first-enclave/secure-local-channel/
-```
-Remembering steps, that you learned in previous sections, let's build the server application. Please run the script below to: build your docker image -> create Enclave Imabe File -> Run new Nitro Enclave in debug-mode -> Connect to debug console:
-```sh
-$ docker build ./ -t secure-channel-example
-$ nitro-cli build-enclave --docker-uri secure-channel-example:latest --output-file secure-channel-example.eif
-$ nitro-cli run-enclave --cpu-count 2 --memory 2048 --eif-path secure-channel-example.eif --debug-mode
-$ ENCLAVE_ID=`nitro-cli describe-enclaves | jq -r ".[0].EnclaveID"`
-$ [ "$ENCLAVE_ID" != "null" ] && nitro-cli console --enclave-id ${ENCLAVE_ID}
-```
+1. Navigate to the `secure-local-channel` code directory:
+    ```sh
+    $ cd ~/environment/aws-nitro-enclaves-workshop/resources/code/my-first-enclave/secure-local-channel/
+    ```
 
-{{% notice info %}}
+1. Recalling steps that you learned in the previous section, let's build the server application. Execute the commands below to build your docker image, create the enclave image file, run a new enclave in debug mode, and connect to debug console:
+    ```sh
+    $ docker build ./ -t secure-channel-example
+    $ nitro-cli build-enclave --docker-uri secure-channel-example:latest --output-file secure-channel-example.eif
+    $ nitro-cli run-enclave --cpu-count 2 --memory 2048 --eif-path secure-channel-example.eif --debug-mode
+    $ ENCLAVE_ID=$(nitro-cli describe-enclaves | jq -r ".[0].EnclaveID")
+    $ [ "$ENCLAVE_ID" != "null" ] && nitro-cli console --enclave-id ${ENCLAVE_ID}
+    ```
+
+    {{% notice info %}}
 If you encounter that your enclave requires more available memory, you will have to configure `/etc/nitro_enclaves/allocator.yaml` and restart allocator services. See [Nitro CLI Documentation](https://github.com/aws/aws-nitro-enclaves-cli). for more details.
-{{% /notice %}}
+    {{% /notice %}}
 
 ### Run Client Application
 With the vsock-proxy and server application running, let's call it from the client application, running on the host. The client application will obtain the list of published IP ranges for AWS S3 service and filter out to the region that you specify as the last parameter in the client call. 
 
-Please open new terminal window and run: 
+1. Start a new terminal session (To start a new terminal session, on the menu bar, choose **Window**, **New Terminal**.) and run:
 
-```sh
-$ cd ~/environment/aws-nitro-enclaves-workshop/resources/code/my-first-enclave/secure-local-channel/
-$ python3 client.py client 16  5005 "us-east-1"
-```
-Running the client application should return to you current published IP Rages for S3 service, filtered to the region that you provided.
+1. Navigate to the `secure-local-channel` code directory and start the client app by executing the following commands:
+    ```sh
+    $ cd ~/environment/aws-nitro-enclaves-workshop/resources/code/my-first-enclave/secure-local-channel/
+    $ ENCLAVE_CID=$(nitro-cli describe-enclaves | jq -r ".[0].EnclaveCID")
+    $ python3 client.py client ${ENCLAVE_CID} 5005 "us-east-1"
+    ```
 
-{{% notice info %}}
-It is important to note that the client application takes three parameters: `Enclave_CID`, `port`, and `query`. While you control `query` and `port` stay the same between restarts, `Enclave_CID` changes every time you create the Nitro Enclave. You can learn Enclave_Id by running `nitro-cli describe-enclaves`.
-{{% /notice %}}
+    Running the client application should return to you current published IP Rages for S3 service, filtered to the region that you provided.
+
+    {{% notice note %}}
+The client application accepts three parameters: `cid`, `port`, and `query`. We control `port` and `query`, but `cid` can change every time you run the Nitro Enclave. You can find the enclave CID by running `nitro-cli describe-enclaves`.
+    {{% /notice %}}
 
 ### Summary
-You created a vsock-proxy in the parent host that listens to port `8001` and forwards all traffic to a custom HTTPS endpoint. Inside the enclave, you have Traffic-Forwarder accepting all traffic to localhost on port `443` and forwards it to the vsock-proxy.  
+You created a vsock-proxy in the parent instance that listens to port `8001` and forwards all traffic to a custom HTTPS endpoint. Inside the enclave, you have traffic forwarder accepting all traffic to localhost on port `443` and forwards it to the vsock-proxy.
 
 ### Preparing for the next module
 Before going to the next module, please stop existing Nitro Enclaves and restart vsock-proxy as a service with the default configuration (that will point it back to KMS endpoints).
 
-### Stop running enclaves
-Before continuing to the next section, Let's terminate created enclave by first describing them and then terminating them:
-```sh
-$ ENCLAVE_ID=`nitro-cli describe-enclaves | jq -r ".[0].EnclaveID"`
-$ [ "$ENCLAVE_ID" != "null" ] && nitro-cli terminate-enclave --enclave-id ${ENCLAVE_ID}
-```
-### Start vsock-proxy as a service with the default configuration
-In the terminal window with vsock-proxy, press `CTRL+C (^C)` to stop vsock-proxy, that your custom config.
+1. Let's terminate the enclave:
+    ```sh
+    $ ENCLAVE_ID=$(nitro-cli describe-enclaves | jq -r ".[0].EnclaveID")
+    $ [ "$ENCLAVE_ID" != "null" ] && nitro-cli terminate-enclave --enclave-id ${ENCLAVE_ID}
+    ```
 
-After that run the command below to start is as a service with default configuration from `/etc/vsock_proxy/config.yaml`:
-```sh
-$ sudo systemctl enable nitro-enclaves-vsock-proxy.service
-$ sudo systemctl start nitro-enclaves-vsock-proxy.service
-```
-Now the proxy runs using the default configuration from `/etc/vsock_proxy/config.yaml`, on local port `8001` and the AWS KMS endpoint corresponding to the instance's region.
+1. On the terminal session with `vsock-proxy`, press `CTRL+C (^C)` to stop `vsock-proxy` that running with your custom config.
+
+1. Start `vsock-proxy` as a service with default configuration from `/etc/vsock_proxy/config.yaml` by executing the following commands:
+    ```sh
+    $ sudo systemctl enable nitro-enclaves-vsock-proxy.service
+    $ sudo systemctl start nitro-enclaves-vsock-proxy.service
+    ```
+The proxy will now run using the default configuration from `/etc/vsock_proxy/config.yaml`, on local port `8000`, and proxying to the AWS KMS endpoint corresponding to the instance's AWS Region.
 
 ---
 #### Proceed to the [Cryptographic attestation](cryptographic-attestation.html) section to continue the workshop.

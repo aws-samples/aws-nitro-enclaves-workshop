@@ -206,7 +206,7 @@ If you don't allocate enough memory while running enclave then you will see a er
 
 1. Enter a `read-only` console for the specified enclave. This enables you to view the enclave's console output to assist with troubleshooting. You can use this subcommand only on an enclave that was launched with the `--debug-mode` flag.
     ```sh
-    $ ENCLAVE_ID=`nitro-cli describe-enclaves | jq -r ".[0].EnclaveID"`
+    $ ENCLAVE_ID=$(nitro-cli describe-enclaves | jq -r ".[0].EnclaveID")
     $ [ "$ENCLAVE_ID" != "null" ] && nitro-cli console --enclave-id ${ENCLAVE_ID}
     ```
 
@@ -239,7 +239,7 @@ If you don't allocate enough memory while running enclave then you will see a er
 
 1. Let's terminate the enclave.
     ```sh
-    $ ENCLAVE_ID=`nitro-cli describe-enclaves | jq -r ".[0].EnclaveID"`
+    $ ENCLAVE_ID=$(nitro-cli describe-enclaves | jq -r ".[0].EnclaveID")
     $ [ "$ENCLAVE_ID" != "null" ] && nitro-cli terminate-enclave --enclave-id ${ENCLAVE_ID}
     ```
     The **output** should look similar to
