@@ -72,7 +72,6 @@ def prepare_server_request(ciphertext):
     """
     Get the AWS credential from EC2 instance metadata
     """
-    # TODO IMDSv2
     r = requests.get(
         "http://169.254.169.254/latest/meta-data/iam/security-credentials/")
     instance_profile_name = r.text
