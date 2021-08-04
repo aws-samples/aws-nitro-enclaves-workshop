@@ -106,10 +106,14 @@ Your KMS key policy should now contain a single statement that allows IAM users 
     ]
 </pre>
 
-The IAM principal associated with your Cloud9 Environment is not granted permission in its IAM policies to perform any actions on your CMK. For example, you will be denied if you attempt to view metadata about the key from your Cloud9 terminal by issuing the following command:
+The IAM principal associated with your Cloud9 Environment is not granted permission in its IAM policies to perform any actions on your CMK. For example, if you attempt to view metadata about the key from your Cloud9 terminal by issuing the following command you will be denied:
 ```sh
 $ aws kms describe-key --key-id "alias/my-enclave-key"
 ```
+
+{{% notice tip %}}
+The above command is denied because the IAM principal used by your Cloud9 environment does not have permission to perform operations on your KMS CMK. The denial of this request illustrates that the IAM principal associated with your Cloud9 environment is not the same as the IAM principal you used to sign in to the AWS Management Console and does not have permission to perform operations on the CMK. To learn more about managing access to KMS see the [Authentication and access control for AWS KMS](https://docs.aws.amazon.com/kms/latest/developerguide/control-access.html)
+{{% /notice %}}
 
 In order to enable your Cloud9 environment to use the key to encrypt and decrypt data, you'll configure that permission in the KMS Key Policy directly.
 
