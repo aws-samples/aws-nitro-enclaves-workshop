@@ -7,9 +7,8 @@ weight = 12
 
 The **Nitro Enclaves CLI (Nitro CLI)** is a command-line tool for managing the lifecycle of enclaves. You can use the Nitro CLI to create, manage, and terminate Nitro Enclaves. The Nitro CLI must be installed on the Amazon EC2 parent instance. 
 
-In this section, you will learn how us Nitro CLI for operation (create, manage, and terminate enclaves) and also see how to connect to enclave console if it is running in a debug-mode.
+In this section, you learn how to use the Nitro CLI to build a Docker image of your enclave application, use the Docker image to build your Nitro enclave image file, run an enclave in debug-mode using the enclave image file and connect to enclave console to check debug logs.
 
-In this section, you learn how to use the Nitro CLI to build a Docker image of your enclave application, use the Docker image to build your Nitro enclave image file, and then run an enclave using the enclave image file.
 
 ![Architecture diagram](/images/nitro-enclaves-cli-arch.png)
 
