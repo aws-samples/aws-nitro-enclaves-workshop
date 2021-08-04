@@ -39,7 +39,7 @@ In the data submission phase, the client component passes the encrypted value th
 
 {{% notice tip %}}
 The business logic of this application is written in Python. If time allows, please review the code at  
-`~/environment/aws-nitro-enclaves-workshop/resources/code/my-first-enclave/cryptographic-attestation`  
+*~/environment/aws-nitro-enclaves-workshop/resources/code/my-first-enclave/cryptographic-attestation*  
 to understand the internal functioning of this sample. The client component that runs on the parent instance is contained within the `client.py` file and the server component that runs inside the enclave is contained within the `server.py` file.
 {{% /notice %}}
 
@@ -168,7 +168,7 @@ To prepare a new key policy for your CMK:
     $ nitro-cli build-enclave --docker-uri "data-processing:latest" --output-file "data-processing.eif"
     ```
 
-    The **output** should look similar to
+    The **output** should look similar to:
     <pre>
     Enclave Image successfully created.
     {
@@ -182,7 +182,7 @@ To prepare a new key policy for your CMK:
     </pre>
 
     {{% notice info %}}
-Please be sure to carefully save these measurements for later reference as they are critical for this section.
+The output of the `nitro-cli build-enclave` command provides measurements that are unique to the enclave image file. The output will not be identical to the example above. Please be sure to carefully save these measurements for later reference as they are critical for this section.
     {{% /notice %}}
 
 
