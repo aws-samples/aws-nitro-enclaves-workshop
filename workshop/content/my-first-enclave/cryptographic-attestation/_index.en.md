@@ -123,6 +123,7 @@ To prepare a new key policy for your CMK:
 
 1. Customize a pre-prepared key policy template with these values by executing the following command in your Cloud9 terminal.
     ```sh
+    $ cd ~/environment/aws-nitro-enclaves-workshop/resources/code/my-first-enclave/cryptographic-attestation
     $ sed -e "s|ACCOUNT_ID|${ACCOUNT_ID}|" -e "s|AWS_PRINCIPAL|${AWS_PRINCIPAL}|" key_policy_template.json > key_policy.json
     ```
 
