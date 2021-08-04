@@ -264,7 +264,7 @@ To add attestation conditions to your key policy:
               }
     ```
 
-1. Replace the placeholder value `EXAMPLEbc2ecbb68ed99a13d7122abfc0666b926a79d5379bc58b9445c84217f59cfdd36c08b2c79552928702EXAMPLE` with the PCR0 value that you saved when building your enclave.
+1. Replace the placeholder value *EXAMPLEbc2ecbb68ed99a13d7122abfc0666b926a79d5379bc58b9445c84217f59cfdd36c08b2c79552928702EXAMPLE* with the PCR0 value that you saved when building your enclave.
 
     {{% notice tip %}}
 If you do not have access to the PCR0 value from building your enclave, you can rebuild your enclave to access this measurement again.
