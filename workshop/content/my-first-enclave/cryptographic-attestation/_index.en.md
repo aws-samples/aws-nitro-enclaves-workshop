@@ -44,7 +44,7 @@ to understand the internal functioning of this sample. The client component that
 {{% /notice %}}
 
 {{% notice warning %}}
-This section expects that you have already compiled the sample application dependencies and built a docker image for the server component of this application that runs inside the enclave. If you have not yet completed this step please return the [prerequisites section of the Getting Started module](../getting-started/prerequisites.html#compile-the-dependencies-for-the-cryptographic-attestation-sample-application) and do so.
+This section expects that you have already compiled the sample application dependencies and built a base docker image for the server component of this application that runs inside the enclave. If you have not yet completed this step please return the [prerequisites section of the Getting Started module](../getting-started/prerequisites.html#compile-the-dependencies-for-the-nitro-enclaves-workshop-base-image) and do so.
 {{% /notice %}}
 
 ### Create a KMS CMK
@@ -156,6 +156,12 @@ To prepare a new key policy for your CMK:
 
 1. Start a new terminal session. (To start a new terminal session, on the menu bar, choose **Window**, **New Terminal**.)
 
+1. Build your enclave application docker container by executing the following command in your Cloud9 terminal:
+    ```sh
+    $ cd ~/environment/aws-nitro-enclaves-workshop/resources/code/my-first-enclave/cryptographic-attestation
+    $ docker build ./ -t "data-processing"
+    ```
+
 1. Build your enclave image file by executing the following command:
     ```sh
     $ nitro-cli build-enclave --docker-uri "data-processing:latest" --output-file "data-processing.eif"
@@ -174,28 +180,13 @@ To prepare a new key policy for your CMK:
     }
     </pre>
 
-    <!-- TODO: improve the approach here -->
-
     {{% notice info %}}
 Please be sure to carefully save these measurements for later reference as they are critical for this section.
     {{% /notice %}}
 
 
-    <!-- Hide vsock-proxy start section as it is done in the previous chapter.
-
-    ### Start your vsock proxy
-
-    The default configuration for the vsock-proxy service permits the enclave to communicate with AWS KMS endpoints in supported regions.
-
-    To start the vsock-proxy service on the parent instance with the default configuration, issue the following command in your Cloud9 terminal:
-    ```sh
-    $ systemctl start nitro-enclaves-vsock-proxy.service
-    ```
-    -->
-
 1. Launch your enclave application by executing the following command in your Cloud9 terminal:
     ```sh
-    $ cd ~/environment/aws-nitro-enclaves-workshop/resources/code/my-first-enclave/cryptographic-attestation
     $ nitro-cli run-enclave --debug-mode --cpu-count 2 --memory 2500 --eif-path "./data-processing.eif"
     ```
 
@@ -214,8 +205,6 @@ Please be sure to carefully save these measurements for later reference as they 
     $ cd ~/environment/aws-nitro-enclaves-workshop/resources/code/my-first-enclave/cryptographic-attestation
     $ pip3 install --user -r "requirements.txt"
     ```
-
-    <!-- TODO: view values.txt -->
 
 1. Select a simulated sensitive value from `values.txt` at random and encrypt it using your KMS CMK by issuing the following command:
     ```sh
@@ -257,13 +246,13 @@ To add attestation conditions to your key policy:
 
 1. Open key_policy.json in your Cloud9 editor.
 
-2. Place your cursor at the end of line 30 (this line currently says `"Resource": "*"`).
+1. Place your cursor at the end of line 30 (this line currently says `"Resource": "*"`).
 
-3. Enter a `,`
+1. Enter a `,`
 
-4. Press the return key on your keyboard to start a new line.
+1. Press the return key on your keyboard to start a new line.
 
-5. Copy the following text and paste it into your Cloud9 editor.
+1. Copy the following text and paste it into your Cloud9 editor.
 
     <!-- Please don't change indentation on JSON block below since we are making it neatly copy-pasteable. -->
     ```
@@ -274,7 +263,7 @@ To add attestation conditions to your key policy:
               }
     ```
 
-6. Replace the placeholder value `EXAMPLEbc2ecbb68ed99a13d7122abfc0666b926a79d5379bc58b9445c84217f59cfdd36c08b2c79552928702EXAMPLE` with the PCR0 value that you saved when building your enclave.
+1. Replace the placeholder value `EXAMPLEbc2ecbb68ed99a13d7122abfc0666b926a79d5379bc58b9445c84217f59cfdd36c08b2c79552928702EXAMPLE` with the PCR0 value that you saved when building your enclave.
 
     {{% notice tip %}}
 If you do not have access to the PCR0 value from building your enclave, you can rebuild your enclave to access this measurement again.
@@ -288,7 +277,7 @@ Your key policy now permits your Cloud9 environment principal to encrypt using t
 
 ### Validating enclave attestation-based KMS key policy conditions
 
-Now that you've updated you key policy, confirm that the new condition has take effect by issuing the following command in your Cloud9 terminal:
+Now that you've updated your key policy, confirm that the new condition has take effect by issuing the following command in your Cloud9 terminal:
 ```sh
 $ base64 -di string.encrypted > string.encrypted.binary &&
   aws kms decrypt \
@@ -303,7 +292,6 @@ This change will also impact the behavior of the enclave in debug mode. To valid
 ```sh
 $ python3 client.py --submit --ciphertext "string.encrypted"  --alias "my-enclave-key"
 ```
-<!-- TODO -- Server.py needs to be cleaned up. The denial is currently crashing the enclave -->
 
 This command fails because the Nitro Hypervisor will not sign an attestation document with actual PCR values for an enclave launched in debug mode.
 

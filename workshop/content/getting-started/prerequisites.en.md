@@ -9,7 +9,7 @@ You will be using AWS Cloud9 IDE as a development environment to streamline the 
 * [Disable AWS managed temporary credentials](#disable-aws-managed-temporary-credentials)
 * [Install and configure Nitro Enclaves CLI and tools](#install-and-configure-nitro-enclaves-cli-and-tools)
 * [Clone the workshop repository](#clone-the-workshop-repository)
-* [Compile the dependencies for the cryptographic attestation sample application](#compile-the-dependencies-for-the-cryptographic-attestation-sample-application)
+* [Compile the dependencies for Nitro Enclaves Workshop base image](#compile-the-dependencies-for-the-nitro-enclaves-workshop-base-image)
 
 ### Disable AWS managed temporary credentials
 
@@ -93,22 +93,22 @@ For additional details, see [Documentation](https://docs.aws.amazon.com/enclaves
 If you intend to complete the [cryptographic attestation](../my-first-enclave/cryptographic-attestation.html) section of the [My First Enclave](../my-first-enclave.html) module you must complete the following steps. If you do not wish to complete this section, you may proceed to the [My First Enclave](../my-first-enclave.html) module to continue the workshop.
 {{% /notice %}}
 
-### Compile the dependencies for the cryptographic attestation sample application
+### Compile the dependencies for the Nitro Enclaves Workshop base image
 
-Nitro Enclaves use docker images as a convenient format for packaging the applications you wish to launch in an enclave. The docker image used for the sample application in the [cryptographic attestation](../my-first-enclave/cryptographic-attestation.html) section of the [My First Enclave](../my-first-enclave.html) module has dependencies that must be compiled.
+Nitro Enclaves use docker images as a convenient format for packaging the applications you wish to launch in an enclave. Some of the sample applications in this workshop require dependencies that must be compiled.
 
-To package the code for this sample application into a docker image:
+To package these dependencies as a base docker image:
 
 1. Start a new terminal session. (To start a new terminal session, on the menu bar, choose **Window**, **New Terminal**.)
 
 1. Change directory to the code directory for the My First Enclave module by entering the following command:
     ```sh
-    $ cd ~/environment/aws-nitro-enclaves-workshop/resources/code/my-first-enclave/cryptographic-attestation
+    $ cd ~/environment/aws-nitro-enclaves-workshop/resources/code/getting-started
     ```
 
 1. Initiate the image build process by entering the following command:
     ```sh
-    $ docker build ./ -t "data-processing"
+    $ docker build ./ -t "enclave_base"
     ```
 
 {{% notice tip %}}
