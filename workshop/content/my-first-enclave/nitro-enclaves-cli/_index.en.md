@@ -30,7 +30,7 @@ For detailed steps on installing the CLI, see [Prerequisites and environment set
     $ cat /etc/nitro_enclaves/allocator.yaml
     ```
 
-    The **output** should look similar to
+    The **output** should look like
     <pre>
     # Enclave configuration file.
     #
@@ -48,18 +48,9 @@ For detailed steps on installing the CLI, see [Prerequisites and environment set
     </pre>
 
     {{% notice info %}}
-The default values are `512MB` and `2 vCPUs`.
+The default values are `512 MiB` and `2 vCPUs`.
     {{% /notice %}}
 
-1. Let's check available memory and CPU on the parent EC2 instance after you have allocated resources to Nitro Enclave. The resources were allocated with default values when you started `nitro-enclaves-allocator` service in the pre-requisites section.
-    ```sh
-    $ free -m
-    $ lscpu
-    ```
-
-    {{% notice info %}}
-The changes require restarting `nitro-enclaves-allocator` service. You should allocate CPU in full cores i.e., 2x vCPU for x86 hyper-threaded instances. 
-    {{% /notice %}}
 
 
 ### Build Nitro Enclave Image File
@@ -75,7 +66,7 @@ Nitro Enclaves uses Docker images as a convenient file format for packaging your
     $ docker build -t hello-app:latest .
     ```
 
-    The **output** should look similar to
+    The **output** should look like
     <pre>
     Successfully tagged hello-app:latest
     </pre>
@@ -113,15 +104,15 @@ Nitro Enclaves uses Docker images as a convenient file format for packaging your
     For example, when using Nitro Enclaves with AWS Key Management Service (KMS), you can specify these PCRs in condition keys for customer-managed keys policies. When an application in the enclave performs a supported AWS KMS operation, AWS KMS compares the PCRs in the enclave's signed attestation document with the PCRs specified in the condition keys of the KMS key policy before allowing the operation.
 
     {{% notice tip %}}
-You will learn more about the significance of these values in [Cryptographic attestation](cryptographic-attestation.html) section of this module.  
-For detailed explanation of PCR values, see [Documentation](https://docs.aws.amazon.com/enclaves/latest/user/set-up-attestation.html).
+You will learn about how to use PCRs for secure data processing in [Cryptographic attestation ](cryptographic-attestation.html) section.  
+To read more about how to set up attestation to work with AWS Key Management Service, see [Documentation](https://docs.aws.amazon.com/enclaves/latest/user/kms.html).
     {{% /notice %}}
 
     ```sh
     $ nitro-cli build-enclave --docker-uri hello-app:latest --output-file hello.eif
     ```
 
-    The **output** should look similar to below
+    The **output** should look similar to below. The values of `HashAlgorithm`, `PCR0`, `PCR1`, and `PCR2` will be different from below in your output.
 
     <pre>
     Start building the Enclave Image...
@@ -144,7 +135,26 @@ The `build-enclave` subcommand is not supported on Windows. If you are using a W
 
 ### Run, connect, and terminate the enclave
 
-1. The `run-enclave` subcommand partitions the specified number of vCPUs and the amount of memory from the Amazon EC2 parent instance to create the enclave. You also need to provide an `enclave image file (.eif)` that contains the operating system libraries and the application that you want to run inside the enclave. Run your Enclave application in `debug` mode in the development environment to look at the logs. If you need to access the enclave console to see the application logs, so you must include the `--debug-mode` option. The allocated memory should be greater than four times of the `EIF` file size. This means you have to update the value of `memory_mib` to `3072` in `/etc/nitro_enclaves/allocator.yaml` file. Furthermore, restart Nitro Enclave Service `nitro-enclaves-allocator` to reflect the latest memory values. You can optionally specify `EnclaveCID` i.e. the socket address used by the `vsock` socket. Only `CIDs` of 4 and higher can be specified. If you omit this option, a random `CID` is allocated to the enclave. You will learn more about `vsock`, i.e. secure local channel in the next module.
+
+1. When creating enclave in the Amazon EC2 parent instance, you allocate memory and CPU that are reserved for the enclave. To ensure that you have enough memory and CPU on the parent instance, let's check available resources and size of the enclave file.
+    ```sh
+    $ free -m
+    $ lscpu
+    $ ls -lh hello.eif  
+    ```
+
+    {{% notice info %}}
+You should allocate at least 4 times the EIF file size for enclave memory `memory_mib`. This is needed because `tmpfs` filesystem uses half of the memory and system uses remaining memory to uncompress the initial `initramfs` where the application executables reside. You should allocate CPU in full cores i.e., 2x vCPU for x86 hyper-threaded instances. 
+    {{% /notice %}}
+
+1. The `run-enclave` subcommand partitions the specified number of vCPUs and the amount of memory from the Amazon EC2 parent instance to create the enclave. You need to provide an enclave image file (`.eif`) that contains the operating system libraries and the application to be run inside the enclave. The allocated memory should be greater than four times of the `EIF` file size. This means you need to update the value of `memory_mib` to `3072` in `/etc/nitro_enclaves/allocator.yaml` file. Furthermore, restart Nitro Enclave Service `nitro-enclaves-allocator` to reflect the latest value. 
+
+    {{% notice info %}}
+If you don't allocate enough memory while running enclave then you will see a error  "`[ E26 ] Insufficient memory requested`.......". You will learn more about this error in [Troubleshooting](troubleshooting.html) section.
+    {{% /notice %}}
+
+    
+    To view the application logs in development environment, you need access to enclave console for which you must include the `--debug-mode` option. You can optionally specify `EnclaveCID` i.e. the socket address used by the `vsock` socket. Only `CIDs` of 4 and higher can be specified. If you omit this option, a random `CID` is allocated to the enclave. You will learn more about `vsock` in [Secure local channel](secure-local-channel.html) section.
 
     ```sh
     $ sudo systemctl stop nitro-enclaves-allocator.service
@@ -156,7 +166,9 @@ The `build-enclave` subcommand is not supported on Windows. If you are using a W
     $ nitro-cli run-enclave --cpu-count 2 --memory 3072 --eif-path hello.eif --debug-mode --enclave-cid 16
     ```
 
-    The **output** should look similar to
+
+
+    The **output** should look similar to below. The values of `EnclaveID`, `ProcessID`, `EnclaveCID`, and `CPUIDs` may be different from below in your output.
     <pre>
     Start allocating memory...
     Started enclave with enclave-cid: 16, memory: 3072 MiB, cpu-ids: [1, 3]
@@ -173,9 +185,6 @@ The `build-enclave` subcommand is not supported on Windows. If you are using a W
     }
     </pre>
 
-    {{% notice info %}}
-If you don't allocate enough memory while running enclave then you will see a error similar to `[ E26 ] Insufficient memory requested. User provided `memory` is 1784 MB, but based on the EIF file size, the minimum memory should be 1792 MB`
-    {{% /notice %}}
 
 
 1. Use `describe-enclaves` command to list running Enclaves and display associated attributes such as `EnclaveID`, `ProcessID`, `EnclaveCID`, `State`, `CPUIDs`, `MemoryMiB` and `Flags`. 
@@ -184,7 +193,7 @@ If you don't allocate enough memory while running enclave then you will see a er
     $ nitro-cli describe-enclaves
     ```
 
-    The **output** should look similar to
+    The **output** should look similar to below. The values of `EnclaveID`, `ProcessID`, `EnclaveCID`, and `CPUIDs` may be different in your output
     <pre>
     [
         {
@@ -209,7 +218,7 @@ If you don't allocate enough memory while running enclave then you will see a er
     $ [ "$ENCLAVE_ID" != "null" ] && nitro-cli console --enclave-id ${ENCLAVE_ID}
     ```
 
-    The **output** should look similar to
+    The **output** should look similar to below. `Hello from the enclave side!` is a log statement from your application code in `server.py`.
 
     <pre>
     Connecting to the console for enclave 24...
@@ -234,14 +243,14 @@ If you don't allocate enough memory while running enclave then you will see a er
     [   5] Hello from the enclave side!
     </pre>
 
-    Press `CTRL+C (^C)` to exit the debug mode read-only console output.
+    Press `CTRL+C (^C)` to exit the read-only enclave console.
 
-1. Let's terminate the enclave.
+1. Let's terminate the enclave using `terminate-enclave` command
     ```sh
     $ ENCLAVE_ID=$(nitro-cli describe-enclaves | jq -r ".[0].EnclaveID")
     $ [ "$ENCLAVE_ID" != "null" ] && nitro-cli terminate-enclave --enclave-id ${ENCLAVE_ID}
     ```
-    The **output** should look similar to
+    The **output** should look similar to below. The value of `EnclaveID` will be different from below in your output
     <pre>
     Successfully terminated enclave i-0f83e6d2edfba9237-enc17a3112d0b4532b.
     {
