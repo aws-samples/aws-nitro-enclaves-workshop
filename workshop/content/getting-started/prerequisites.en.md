@@ -14,11 +14,13 @@ You will be using AWS Cloud9 IDE as a development environment to streamline the 
 ### Disable AWS managed temporary credentials
 
 1. With your AWS Cloud9 environment open, in the AWS Cloud9 IDE, on the menu bar, choose the **AWS Cloud9 icon, Preferences**.
+![Choose preferences](/images/prerequisites-1-choose-preferences.png?featherlight=false)
 
-1. On the **Preferences** tab, in the navigation pane, choose **AWS Settings, Credentials**.
+1. On the **Preferences** tab, in the navigation pane, scroll to end and choose **AWS Settings, Credentials**.
+![Choose AWS settings credentials](/images/prerequisites-2-choose-aws-settings-credentials.png?featherlight=false)
 
-1. Use **AWS managed temporary credentials** to turn AWS managed temporary credentials off.
-
+1. Toggle **AWS managed temporary credentials** off to turn AWS managed temporary credentials off.
+![Toggle AWS managed temporary credentials](/images/prerequisites-3-toggle-aws-managed-temporary-credentials.png?featherlight=false)
 
 ### Install and configure Nitro Enclaves CLI and tools
 {{% notice note %}}

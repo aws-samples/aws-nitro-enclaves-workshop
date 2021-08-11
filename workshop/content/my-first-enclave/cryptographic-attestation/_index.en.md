@@ -39,7 +39,7 @@ In the data submission phase, the client component passes the encrypted value th
 
 {{% notice tip %}}
 The business logic of this application is written in Python. If time allows, please review the code at  
-`~/environment/aws-nitro-enclaves-workshop/resources/code/my-first-enclave/cryptographic-attestation`  
+*~/environment/aws-nitro-enclaves-workshop/resources/code/my-first-enclave/cryptographic-attestation*  
 to understand the internal functioning of this sample. The client component that runs on the parent instance is contained within the `client.py` file and the server component that runs inside the enclave is contained within the `server.py` file.
 {{% /notice %}}
 
@@ -106,10 +106,14 @@ Your KMS key policy should now contain a single statement that allows IAM users 
     ]
 </pre>
 
-The IAM principal associated with your Cloud9 Environment is not granted permission in its IAM policies to perform any actions on your CMK. For example, you will be denied if you attempt to view metadata about the key from your Cloud9 terminal by issuing the following command:
+The IAM principal associated with your Cloud9 Environment is not granted permission in its IAM policies to perform any actions on your CMK. For example, if you attempt to view metadata about the key from your Cloud9 terminal by issuing the following command you will be denied:
 ```sh
 $ aws kms describe-key --key-id "alias/my-enclave-key"
 ```
+
+{{% notice tip %}}
+The above command is denied because the IAM principal used by your Cloud9 environment does not have permission to perform operations on your KMS CMK. The denial of this request illustrates that the IAM principal associated with your Cloud9 environment is not the same as the IAM principal you used to sign in to the AWS Management Console and does not have permission to perform operations on the CMK. To learn more about managing access to KMS see the [Authentication and access control for AWS KMS](https://docs.aws.amazon.com/kms/latest/developerguide/control-access.html)
+{{% /notice %}}
 
 In order to enable your Cloud9 environment to use the key to encrypt and decrypt data, you'll configure that permission in the KMS Key Policy directly.
 
@@ -123,6 +127,7 @@ To prepare a new key policy for your CMK:
 
 1. Customize a pre-prepared key policy template with these values by executing the following command in your Cloud9 terminal.
     ```sh
+    $ cd ~/environment/aws-nitro-enclaves-workshop/resources/code/my-first-enclave/cryptographic-attestation
     $ sed -e "s|ACCOUNT_ID|${ACCOUNT_ID}|" -e "s|AWS_PRINCIPAL|${AWS_PRINCIPAL}|" key_policy_template.json > key_policy.json
     ```
 
@@ -167,7 +172,7 @@ To prepare a new key policy for your CMK:
     $ nitro-cli build-enclave --docker-uri "data-processing:latest" --output-file "data-processing.eif"
     ```
 
-    The **output** should look similar to
+    The **output** should look similar to:
     <pre>
     Enclave Image successfully created.
     {
@@ -181,7 +186,7 @@ To prepare a new key policy for your CMK:
     </pre>
 
     {{% notice info %}}
-Please be sure to carefully save these measurements for later reference as they are critical for this section.
+The output of the `nitro-cli build-enclave` command provides measurements that are unique to the enclave image file. The output will not be identical to the example above. Please be sure to carefully save these measurements for later reference as they are critical for this section.
     {{% /notice %}}
 
 
@@ -263,7 +268,7 @@ To add attestation conditions to your key policy:
               }
     ```
 
-1. Replace the placeholder value `EXAMPLEbc2ecbb68ed99a13d7122abfc0666b926a79d5379bc58b9445c84217f59cfdd36c08b2c79552928702EXAMPLE` with the PCR0 value that you saved when building your enclave.
+1. Replace the placeholder value *EXAMPLEbc2ecbb68ed99a13d7122abfc0666b926a79d5379bc58b9445c84217f59cfdd36c08b2c79552928702EXAMPLE* with the PCR0 value that you saved when building your enclave.
 
     {{% notice tip %}}
 If you do not have access to the PCR0 value from building your enclave, you can rebuild your enclave to access this measurement again.
