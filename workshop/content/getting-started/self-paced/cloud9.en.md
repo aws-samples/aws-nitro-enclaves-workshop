@@ -13,7 +13,7 @@ If you skipped creating a new account and using an existing account, make sure i
 
 1. Download the AWS CloudFormation template from this workshop's GitHub repo.
     ```sh
-    curl https://github.com/aws-samples/aws-nitro-enclaves-workshop/raw/main/resources/templates/cloud9.yaml -o cloud9.yaml
+    curl https://raw.githubusercontent.com/aws-samples/aws-nitro-enclaves-workshop/main/resources/templates/cloud9.yaml -o cloud9.yaml
     ```
 
 1. Navigate to the AWS CloudFormation console to create a new stack.
