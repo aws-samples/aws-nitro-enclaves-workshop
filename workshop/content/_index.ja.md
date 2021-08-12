@@ -15,11 +15,7 @@ _機密性の高いデータを AWS Nitro Enclaves で処理する方法を学�
 
 AWS Nitro Enclaves は、お客様が分離されたコンピュート環境を構築することにより、Amazon EC2インスタンス内の個人を特定できる情報(PII)、ヘルスケア、金融、知的財産データなどの機密性の高いデータを更に保護し、安全な処理を実現します。Nitro Enclaves は、EC2インスタンスの CPU とメモリの分離を提供するのと同じ Nitro Hypervisor 技術を使用しています。
 
-
-Nitro Enclaves helps customers reduce the attack surface area for their most sensitive data processing applications. Enclaves offer an isolated, hardened, and highly constrained environment to host security-critical applications. They have no persistent storage, no interactive access, and no external networking. Communication between your instance and your enclave is done using a secure local channel. By default, even a root user or an admin user on the instance will not be able to access or SSH into the enclave. Nitro Enclaves includes cryptographic attestation for your software so that you can be sure that only authorized code is running, as well as integration with the AWS Key Management Service so that only your enclaves can access sensitive material.
-
 Nitro Enclaves は、最も機密性の高いデータ処理アプリケーションにおける攻撃対象エリアを削減するのに役立ちます。Enclaves はセキュリティクリティカルなアプリケーションをホストするための、隔離され、強化され、高度に制約された環境を提供します。Enclaves には永続的なストレージ、インタラクティブなアクセス、外部ネットワーク環境はありません。インスタンスと Enclaves の間の通信は、セキュアなローカルチャネルが使用されます。デフォルトでは、インスタンスの root ユーザーや admin ユーザーであっても、Enclaves 内部にアクセスしたり SSH接続できません。認証済のコードのみが実行されていることを確認できるよう Nitro Enclaves にはソフトウェアの暗号認証機能があり、AWS Key Management Service と統合されているために Enclaves のみが機密情報にアクセスできるようになります。
-
 
 [Official Documentation](https://docs.aws.amazon.com/enclaves/latest/user/nitro-enclave.html)
 
