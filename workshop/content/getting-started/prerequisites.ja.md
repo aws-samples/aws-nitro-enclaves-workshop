@@ -24,7 +24,7 @@ weight: 30
 
 ### Nitro Enclaves CLI とツールのインストールとセットアップ
 {{% notice note %}}
-Workshop の中で使用するコマンドの多くは、AWS Cloud9 IDE の中のターミナルセッションで実行します。新規のターミナルセッションを開始するには、メニューバーの **Window** **New Terminal** を選択します。
+Workshop の中で使用するコマンドの多くは、AWS Cloud9 IDE の中のターミナルセッションで実行します。新規のターミナルセッションを開始するには、メニューバーの **Window** / **New Terminal** を選択します。
 {{% /notice %}}
 
 1. Nitro Enclaves CLI をインストールし enclaves を実行できるようにします
@@ -81,7 +81,7 @@ Workshop の中で使用するコマンドの多くは、AWS Cloud9 IDE の中�
     <pre>uid=1000(ec2-user) gid=1000(ec2-user) groups=1000(ec2-user),4(adm),10(wheel),190(systemd-journal),991(docker),1001(ne)</pre>
 
 {{% notice tip %}}
-For additional details, see [Documentation](https://docs.aws.amazon.com/enclaves/latest/user/nitro-enclave-cli-install.html).
+詳細情報は、[公式ドキュメント](https://docs.aws.amazon.com/enclaves/latest/user/nitro-enclave-cli-install.html) を確認してください。
 {{% /notice %}}
 
 ### Clone the workshop repository
@@ -101,14 +101,14 @@ Nitro Enclavesでは、Enclaves で起動したいアプリケーションをパ
 
 ベースとなる docker イメージ用にこれらの依存関係をパッケージするために:
 
-1. 新規のターミナルセッションを開始します (新規のターミナルセッションを開始するには、メニューバーの **Window** **New Terminal** を選択します)
+1. 新規のターミナルセッションを開始します (新規のターミナルセッションを開始するには、メニューバーの **Window** / **New Terminal** を選択します)
 
 1. 下記のコマンドを実行してMy First Enclave モジュール用のコードのディレクトリに移動します:
     ```sh
     $ cd ~/environment/aws-nitro-enclaves-workshop/resources/code/getting-started
     ```
 
-1. 下記のコマンドを実行してビルドプロセスを初期化します:
+1. 下記のコマンドを実行してビルドプロセスを開始します:
     ```sh
     $ docker build ./ -t "enclave_base"
     ```
