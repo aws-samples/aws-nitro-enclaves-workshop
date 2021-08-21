@@ -111,7 +111,7 @@ Nitro Enclaves では、アプリケーションをパッケージ化するた�
     </tr>
     </table>
 
-    例えば、Nitro Enclaves を AWS Key Management Service (KMS) と一緒に使用する場合、お客様が管理するキーポリシーの条件キーでこれらの PCR を指定できます。enclave 内のアプリケーションがサポートされている AWS KMS の操作を実行する際には、AWS KMS は操作を許可する前に、enclave の署名済み身元証明(構成証明)の中の PCR群と、KMS キーポリシーの条件キーで指定された PCR群を比較します。
+    例えば、Nitro Enclaves を AWS Key Management Service (KMS) と一緒に使用する場合、お客様が管理するキーポリシーの条件キーでこれらの PCR を指定できます。enclave 内のアプリケーションがサポートされている AWS KMS の操作を実行する際には、AWS KMS は操作を許可する前に、enclave の署名済み身元証明(構成証明)の中の PCR の値と、KMS キーポリシーの条件キーで指定された PCR の値を比較します。
     
     {{% notice tip %}}
 このモジュールの [暗号技術を用いた身元証明(構成証明)](cryptographic-attestation.html) セクションで、これらの値の詳細を確認できます。
@@ -146,7 +146,7 @@ PCR の値の詳細な説明は、[公式ドキュメント](https://docs.aws.am
 
 ### enclave を実行、接続、削除する
 
-1. `run-enclave` サブコマンドは、enclave を作成するために、指定された数の vCPU とメモリ量を親の Amazon EC2インスタンスから区分けします。また、enclave 内で実行する OSライブラリとアプリケーションを含む `enclaveイメージファイル(.eif)` を提供する必要もあります。ログを見るために、開発環境で Enclaveアプリケーションを `debug` モードで実行します。アプリケーションログを確認するために enclaveコンソールにアクセスする必要がある場合は、`--debug-mode` オプションを含める必要があります。割り当てるメモリは、`EIF` のファイルサイズの 4倍以上にする必要があります。`/etc/nitro_enclaves/allocator.yaml` ファイルの `memory_mib` の値を `3072` に更新しなければならないことを意味します。さらに、最新のメモリ設定量を反映させるために、Nitro Enclave サービスの `nitro-enclaves-allocator` を再起動します。オプションで `EnclaveCID` つまり `vsock` ソケットで使用されるソケットアドレスを指定することもできます。`CIDs` には 4以上の値のみを指定できます。このオプションを省略した場合は、ランダムな `CID` が Enclave に割り当てられます。次のモジュールで、`vsock` つまりセキュアなローカルチャネルについて学習します。
+1. `run-enclave` サブコマンドは、enclave を作成するために、指定された数の vCPU とメモリ量を親の Amazon EC2インスタンスから区分けします。また、enclave 内で実行する OSライブラリとアプリケーションを含む `enclaveイメージファイル(.eif)` を指定する必要もあります。ログを見るために、開発環境で Enclaveアプリケーションを `debug` モードで実行します。アプリケーションログを確認するために enclaveコンソールにアクセスする必要がある場合は、`--debug-mode` オプションを含めます。割り当てるメモリは、`EIF` のファイルサイズの 4倍以上にする必要があります。`/etc/nitro_enclaves/allocator.yaml` ファイルの `memory_mib` の値を `3072` に更新します。さらに、この設定を反映させるために、Nitro Enclave サービスの `nitro-enclaves-allocator` を再起動します。オプションで `EnclaveCID` つまり `vsock` ソケットで使用されるソケットアドレスを指定することもできます。`CIDs` には 4以上の値のみを指定できます。このオプションを省略した場合は、ランダムな `CID` が Enclave に割り当てられます。次のモジュールで、`vsock` つまりセキュアなローカルチャネルについて学習します。
 
     ```sh
     $ sudo systemctl stop nitro-enclaves-allocator.service
@@ -203,9 +203,9 @@ Enclave の実行中に十分なメモリが割り当てられていない場合
             "Flags": "DEBUG_MODE"
         }
     ]
-    </pre>
+   </pre>
 
-1. 特定の enclave の `read-only` のコンソールに入ります。トラブルシューティングのために enclave のコンソール出力を表示できるようになります。このサブコマンドは、enclave 起動時に `--debug-mode` オプションを指定した時のみ使用できます。
+1. 起動した enclave の `read-only` のコンソールに入ります。トラブルシューティングのために enclave のコンソール出力を表示できるようになります。このサブコマンドは、enclave 起動時に `--debug-mode` オプションを指定した時のみ使用できます。
     ```sh
     $ ENCLAVE_ID=$(nitro-cli describe-enclaves | jq -r ".[0].EnclaveID")
     $ [ "$ENCLAVE_ID" != "null" ] && nitro-cli console --enclave-id ${ENCLAVE_ID}

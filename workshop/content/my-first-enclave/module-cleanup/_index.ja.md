@@ -5,7 +5,7 @@ weight = 16
 +++
 
 {{% notice info %}}
-これが最後に実行するモジュールの場合は、Workshop の環境を片付けるために [後片付け](../cleanup.html) に進んでください。
+この Workshop を終了する場合は、環境を片付けるために [後片付け](../cleanup.html) に進んでいください。
 {{% /notice %}}
 
 * 実行している enclave を削除します。

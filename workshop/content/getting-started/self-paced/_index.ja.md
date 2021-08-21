@@ -8,7 +8,7 @@ weight: 11
 
 
 {{% notice warning %}}
-このセクションは、あなた自身の環境で Workshop を実行する場合のみ完了させてください。AWS 主催のイベント(re:Invent、re:Inforce、Immersion Day など) に参加している場合は、[AWS 主催のイベントで Workshop を開始する](../getting-started/aws-event.html)に進んでください。
+このセクションは、あなた自身の環境で Workshop を実行する場合のみ実行してください。AWS 主催のイベント(re:Invent、re:Inforce、Immersion Day など) に参加している場合は、[AWS 主催のイベントで Workshop を開始する](../getting-started/aws-event.html)に進んでください。
 {{% /notice %}}
 
 {{% children %}}

@@ -13,7 +13,7 @@ chapter: true
 ### AWS Nitro Enclaves Workshop に参加いただきありがとうございました!
 ---
 
-これでモジュールを完了しましたので、作成した全てのリソースを削除する手続きに進めます。Workshop を完了したら、後片付けを始めましょう...
+これでモジュールを完了しましたので、作成した全てのリソースを削除する手続きに進めます。
 
 ## ...AWS イベントで
 
@@ -30,7 +30,7 @@ chapter: true
 
     https://console.aws.amazon.com/cloudformation/home#/stacks/stackinfo
 
-1. Workshop を始める時に作成した `NitroEnclavesWorkshop` スタックを選択し、_Delete_ をクリックします。_Delete stack_ をクリックして削除することを再確認します。
+1. Workshop を始める時に作成した `NitroEnclavesWorkshop` スタックを選択し、_削除_ をクリックします。_スタックの削除_ をクリックして削除することを再確認します。
 {{% notice warning %}}
 Cloud9 環境の中の全てのファイルが削除されます。もし何か保存しておきたいファイルがある場合は、スタックを削除するまえに保存しておいてください。
 {{% /notice %}}

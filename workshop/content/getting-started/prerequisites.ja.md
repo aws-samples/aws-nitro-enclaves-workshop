@@ -4,7 +4,7 @@ weight: 30
 ---
 
 
-プロセスを効率化するために、開発環境として AWS Cloud9 IDE を使用することになります。Cloud9 IDE で _Nitro Enclaves Workshop_ を開いて、Workshop で使用する前提条件をインストールします。これらの前提条件には下記が含まれます:
+この Workshop では、プロセスを効率化するために開発環境として AWS Cloud9 IDE を使用します。Cloud9 IDE で _Nitro Enclaves Workshop_ を開いて、Workshop で使用する前提条件をインストールします。これらの前提条件には下記が含まれます:
 
 * [AWS 管理の一時的な認証情報の無効化](#disable-aws-managed-temporary-credentials)
 * [Nitro Enclaves CLI とツールのインストールとセットアップ](#install-and-configure-nitro-enclaves-cli-and-tools)
@@ -24,7 +24,7 @@ weight: 30
 
 ### Nitro Enclaves CLI とツールのインストールとセットアップ
 {{% notice note %}}
-Workshop の中で使用するコマンドの多くは、AWS Cloud9 IDE の中のターミナルセッションで実行します。新規のターミナルセッションを開始するには、メニューバーの **Window** / **New Terminal** を選択します。
+Workshop の中で使用するコマンドの多くは、AWS Cloud9 IDE の中のターミナルセッションで実行します。開始するために、メニューバーの **Window** / **New Terminal** を選択します。
 {{% /notice %}}
 
 1. Nitro Enclaves CLI をインストールし enclaves を実行できるようにします
@@ -97,7 +97,7 @@ Workshop の中で使用するコマンドの多くは、AWS Cloud9 IDE の中�
 
 ### Nitro Enclaves Workshop ベースイメージ用の依存関係のコンパイル
 
-Nitro Enclavesでは、Enclaves で起動したいアプリケーションをパッケージ化するための便利なフォーマットとして、docker イメージを使用します。この Workshop のサンプルの中には、コンパイルしなければならない依存関係が必要なアプリケーションがあります。
+Nitro Enclavesでは、Enclaves 内部で起動したいアプリケーションをパッケージ化するための便利なフォーマットとして、docker イメージを使用します。この Workshop のサンプルの中には、コンパイルしなければならない依存関係が必要なアプリケーションがあります。
 
 ベースとなる docker イメージ用にこれらの依存関係をパッケージするために:
 
