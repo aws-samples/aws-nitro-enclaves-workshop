@@ -46,7 +46,7 @@ IAM リソースに関する詳細は [公式ドキュメント](https://docs.aw
 
 ### AWS Key Management Service (KMS)
 
-Workshop の一部として、KMS Customer Managed Key (CMK) を使用してデータを暗号化し複合しました。KMS コンソールで直接キーを削除したいのではないかと予想します。
+Workshop の一部として、KMS Customer Managed Key (CMK) を使用してデータを暗号化し復号しました。KMS コンソールで直接キーを削除したいのではないかと予想します。
 
 AWS Management Console を使用して KMS CMK を削除します:
 
