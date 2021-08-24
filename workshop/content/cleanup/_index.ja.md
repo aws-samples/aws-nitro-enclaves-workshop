@@ -30,7 +30,7 @@ chapter: true
 
     https://console.aws.amazon.com/cloudformation/home#/stacks/stackinfo
 
-1. Workshop を始める時に作成した `NitroEnclavesWorkshop` スタックを選択し、_削除_ をクリックします。_スタックの削除_ をクリックして削除することを再確認します。
+1. Workshop を始める時に作成した `NitroEnclavesWorkshop` スタックを選択し、_削除_ をクリックします。再確認のウィンドウで _スタックの削除_ をクリックし削除します。
 {{% notice warning %}}
 Cloud9 環境の中の全てのファイルが削除されます。もし何か保存しておきたいファイルがある場合は、スタックを削除するまえに保存しておいてください。
 {{% /notice %}}
