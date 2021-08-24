@@ -46,7 +46,7 @@ def decrypt_cipher(access, secret, token, ciphertext, region):
 
     if ret[0]:
         b64text = proc.communicate()[0].decode()
-        plaintext = json.loads(base64.b64decode(b64text))
+        plaintext = base64.b64decode(b64text).decode()
         return plaintext
     else:
         return "KMS Error. Decryption Failed."
@@ -74,7 +74,7 @@ def main():
         if plaintext == "KMS Error. Decryption Failed.":
             r["error"] = plaintext
         else:
-            last_four = str(plaintext)[-4:]
+            last_four = plaintext[-4:]
             r["last_four"] = last_four
 
         c.send(str.encode(json.dumps(r)))
