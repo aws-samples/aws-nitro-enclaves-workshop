@@ -21,7 +21,7 @@ pygmentsStyle = "monokai"
   themeVariant = "aws"
   disableSearch = false
   disableAssetsBusting = true
-  disableLanguageSwitchingButton = true #TODO: Set back to false once it's translated
+  disableLanguageSwitchingButton = false
   disableShortcutsTitle = true
   disableInlineCopyToClipBoard = true
 
@@ -57,11 +57,15 @@ weight = 20
     title = "AWS Nitro Enclaves Workshop"
     languageName = "English"
     weight = 10
-  [languages.es]
+  [languages.ja]
     title = "AWS Nitro Enclaves Workshop"
-    languageName = "Español"
+    languageName = "日本語"
     weight = 20
-  [languages.pt]
-    title = "AWS Nitro Enclaves Workshop"
-    languageName = "Português"
-    weight = 30
+#  [languages.es]
+#    title = "AWS Nitro Enclaves Workshop"
+#    languageName = "Español"
+#    weight = 30
+#  [languages.pt]
+#    title = "AWS Nitro Enclaves Workshop"
+#    languageName = "Português"
+#    weight = 40
