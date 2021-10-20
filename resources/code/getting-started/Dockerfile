@@ -18,7 +18,7 @@ RUN yum install -y quilt
 # We keep the build artifacts in the -build directory
 WORKDIR /tmp/crt-builder
 
-RUN git clone https://github.com/aws/aws-nitro-enclaves-sdk-c
+RUN git clone --depth 1 --b v0.2.0  https://github.com/aws/aws-nitro-enclaves-sdk-c
 
 RUN git clone -b v0.0.2 https://github.com/awslabs/aws-lc.git aws-lc #
 RUN cmake3 -DCMAKE_PREFIX_PATH=/usr -DCMAKE_INSTALL_PREFIX=/usr -GNinja -S aws-lc -B aws-lc/build .
