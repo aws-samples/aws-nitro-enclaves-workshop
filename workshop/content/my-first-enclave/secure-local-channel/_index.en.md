@@ -49,7 +49,7 @@ This configuration will allow Traffic-Forwarder to route the traffic to vsock-pr
 Outside of this workshop, you can install CLI and `vsock-proxy` both from source code and the Amazon Linux repository. See [Nitro Enclaves CLI GitHub repository](https://github.com/aws/aws-nitro-enclaves-cli) for more details.
     {{% /notice %}}
 
-1. By default, the provided `vsock-proxy` allows routing of traffic only to port `443` of different KMS endpoints in regions all over the globe. It is done through a config file (that you can see at `/etc/vsock_proxy/config.yaml`) through an allowlist. But for our example, we will point the proxy to a different web endpoint. You can use the `vsock-proxy.yaml` with sample code or create your custom file by running these commands:
+1. By default, the provided `vsock-proxy` allows routing of traffic only to port `443` of different KMS endpoints in regions all over the globe. It is done through a config file (that you can see at `/etc/nitro_enclaves/vsock-proxy.yaml`) through an allowlist. But for our example, we will point the proxy to a different web endpoint. You can use the `vsock-proxy.yaml` with sample code or create your custom file by running these commands:
     ```sh
     $ echo "allowlist:" >> your-vsock-proxy.yaml
     $ echo "- {address: ip-ranges.amazonaws.com, port: 443}" >> your-vsock-proxy.yaml
