@@ -57,8 +57,8 @@ def get_account(identity):
     """
     Get account of current instance identity
     """
-    region = identity.json()["accountId"]
-    return region
+    account = identity.json()["accountId"]
+    return account
 
 
 def set_identity():
