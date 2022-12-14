@@ -114,12 +114,12 @@ Before going to the next module, please stop existing Nitro Enclaves and restart
 
 1. On the terminal session with `vsock-proxy`, press `CTRL+C (^C)` to stop `vsock-proxy` that running with your custom config.
 
-1. Start `vsock-proxy` as a service with default configuration from `/etc/vsock_proxy/config.yaml` by executing the following commands:
+1. Start `vsock-proxy` as a service with default configuration from `/etc/nitro_enclaves/vsock-proxy.yaml` by executing the following commands:
     ```sh
     $ sudo systemctl enable nitro-enclaves-vsock-proxy.service
     $ sudo systemctl start nitro-enclaves-vsock-proxy.service
     ```
-The proxy will now run using the default configuration from `/etc/vsock_proxy/config.yaml`, on local port `8000`, and proxying to the AWS KMS endpoint corresponding to the instance's AWS Region.
+The proxy will now run using the default configuration from `/etc/nitro_enclaves/vsock-proxy.yaml`, on local port `8000`, and proxying to the AWS KMS endpoint corresponding to the instance's AWS Region.
 
 ---
 #### Proceed to the [Cryptographic attestation](cryptographic-attestation.html) section to continue the workshop.
