@@ -19,8 +19,6 @@ Resources:
       ImageId: amazonlinux-2-x86_64
       InstanceType: m5.xlarge
       Name: Nitro Enclaves Workshop
-      #Uncomment below for Event Engine only
-      #OwnerArn: !Sub arn:${AWS::Partition}:sts::${AWS::AccountId}:assumed-role/TeamRole/MasterKey
 
   Cloud9SSMRole:
     Type: Custom::Cloud9SSMRole

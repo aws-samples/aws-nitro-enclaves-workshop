@@ -1,6 +1,7 @@
 # AWS Nitro Enclaves Workshop
 
-See [README-local](README-local.md) for instructions on rendering the markdown for this workshop locally.
+Workshop content is publicly available at https://catalog.workshops.aws/nitro-enclaves
+Workshop self paced execution is availble at this sub page: https://catalog.workshops.aws/nitro-enclaves/en-US/0-getting-started/0-1-self-paced
 ## Security
 
 See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
