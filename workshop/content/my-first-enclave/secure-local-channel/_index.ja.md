@@ -13,7 +13,8 @@ weight = 13
 
 
 {{% notice info %}}
-** vsock とは何か、そしてどのように enclave と通信するか？** - vsock は context ID (CID) とポート番号で定義されるソケットインターフェイスの一種です。context ID (CID) は TCP/IP 接続における IPアドレスのようなものです。vsockは、標準的で一意に定義されている POSIX ソケット API (すなわち connect、listen、accept など) を利用して enclave と通信します。アプリケーションはこれらの API を使用することで、vsock 上でネイティブに通信することもできますし、プロキシを経由して vsock 上で HTTPリクエストを送信することもできます。** vsock ソケット** - vsock は親インスタンスと enclave の間のローカルなコミュニケーションチャネルです。これは、enclave が外部サービスと対話する際に使用できる唯一のコミュニケーションチャネルです。enclave の vsock アドレスは、enclave を起動する時に指定する context identifier (CID) で定義されます。親インスタンスで使用される CID は常に 3 です。
+**vsock とは何か、そしてどのように enclave と通信するか？** - vsock は context ID (CID) とポート番号で定義されるソケットインターフェイスの一種です。context ID (CID) は TCP/IP 接続における IPアドレスのようなものです。vsockは、標準的で一意に定義されている POSIX ソケット API (すなわち connect、listen、accept など) を利用して enclave と通信します。アプリケーションはこれらの API を使用することで、vsock 上でネイティブに通信することもできますし、プロキシを経由して vsock 上で HTTPリクエストを送信することもできます。  
+**vsock ソケット** - vsock は親インスタンスと enclave の間のローカルなコミュニケーションチャネルです。これは、enclave が外部サービスと対話する際に使用できる唯一のコミュニケーションチャネルです。enclave の vsock アドレスは、enclave を起動する時に指定する context identifier (CID) で定義されます。親インスタンスで使用される CID は常に 3 です。  
 **Vsock-Proxy** - 親インスタンスのネットワークを経由して外部のエンドポイントにアクセスするために、Nitro enclave は vsock プロキシを使用します。この Workshop では、Nitro CLI に付属する vsock-proxy の実装を使用します。後のモジュールで Nitro Enclaves SDK を使用して AWS KMS を操作 (`kms-decrypt` `kms-generate-data-key` `kms-generate-random`)するために使用するので、このモジュールの例ではカスタムエンドポイントと通信することにフォーカスします。KMS とのセッションは、AWS KMS と enclave 自身との間で論理的に確立され、すべてのセッショントラフィックは親インスタンスから保護されます。
 {{% /notice %}}
 
