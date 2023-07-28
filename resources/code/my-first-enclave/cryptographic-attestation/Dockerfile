@@ -15,7 +15,6 @@ COPY requirements.txt ./
 RUN pip3 install -r /app/requirements.txt
 
 COPY server.py ./
-COPY traffic_forwarder.py ./
 COPY run.sh ./
 
 RUN chmod +x /app/run.sh
