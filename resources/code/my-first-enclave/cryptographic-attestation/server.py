@@ -27,12 +27,14 @@ def get_plaintext(credentials):
 def decrypt_cipher(access, secret, token, ciphertext, region):
     """
     use KMS Tool Enclave Cli to decrypt cipher text
+    Look at https://github.com/aws/aws-nitro-enclaves-sdk-c/blob/main/bin/kmstool-enclave-cli/README.md
+    for more info.
     """
     proc = subprocess.Popen(
     [
         "/app/kmstool_enclave_cli",
+        "decrypt",
         "--region", region,
-        "--proxy-port", KMS_PROXY_PORT,
         "--aws-access-key-id", access,
         "--aws-secret-access-key", secret,
         "--aws-session-token", token,
@@ -45,11 +47,12 @@ def decrypt_cipher(access, secret, token, ciphertext, region):
     ret = proc.communicate()
 
     if ret[0]:
-        b64text = proc.communicate()[0].decode()
-        plaintext = base64.b64decode(b64text).decode()
+        ret0 = proc.communicate()[0].decode()
+        b64text = ret0.split(":")[1]
+        plaintext = base64.b64decode(b64text).decode('utf-8')
         return plaintext
     else:
-        return "KMS Error. Decryption Failed."
+        return "KMS Error. Decryption Failed." + str(ret) #returning the full error stack when something fails
 
 
 def main():
@@ -71,7 +74,7 @@ def main():
         plaintext = get_plaintext(credentials)
         print(plaintext)
 
-        if plaintext == "KMS Error. Decryption Failed.":
+        if plaintext.startswith("KMS Error. Decryption Failed."):
             r["error"] = plaintext
         else:
             last_four = plaintext[-4:]
