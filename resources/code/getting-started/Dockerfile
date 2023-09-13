@@ -2,14 +2,12 @@
 # // SPDX-License-Identifier: MIT-0
 
 ## build kms-enclave-cli from this docker file https://github.com/aws/aws-nitro-enclaves-sdk-c/blob/main/containers/Dockerfile.al2
-ARG BASE_IMAGE=public.ecr.aws/amazonlinux/amazonlinux:2
+ARG BASE_IMAGE=public.ecr.aws/amazonlinux/amazonlinux:minimal
 
 FROM $BASE_IMAGE as builder
 
-RUN yum upgrade -y
-RUN amazon-linux-extras enable epel
-RUN yum clean -y metadata && yum install -y epel-release
-RUN yum install -y \
+RUN dnf upgrade -y
+RUN dnf install -y \
 	cmake3 \
 	gcc \
 	git \

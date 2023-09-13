@@ -2,10 +2,10 @@
 # // SPDX-License-Identifier: MIT-0
 
 #vsock demo image
-FROM public.ecr.aws/amazonlinux/amazonlinux:2
+FROM public.ecr.aws/amazonlinux/amazonlinux:minimal
 
 # Install python for running the server and net-tools for modifying network config
-RUN yum install python3 iproute   -y
+RUN dnf install python3 iproute   -y
 
 WORKDIR /app
 
