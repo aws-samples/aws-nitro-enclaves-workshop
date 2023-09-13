@@ -1,10 +1,10 @@
 # // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 # // SPDX-License-Identifier: MIT-0
 
-FROM public.ecr.aws/amazonlinux/amazonlinux:2
+FROM public.ecr.aws/amazonlinux/amazonlinux:minimal
 
 # Install python for running the server
-RUN yum install python3 -y
+RUN dnf install python3 -y
 
 WORKDIR /app
 
