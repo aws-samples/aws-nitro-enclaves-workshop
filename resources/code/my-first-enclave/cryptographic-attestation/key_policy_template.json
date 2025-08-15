@@ -12,7 +12,7 @@
           "Resource": "*"
       },
       {
-          "Sid": "Enable Cloud9 Environment to Encrypt",
+          "Sid": "Enable Development Environment to Encrypt",
           "Effect": "Allow",
           "Principal": {
               "AWS": "AWS_PRINCIPAL"
@@ -21,7 +21,7 @@
           "Resource": "*"
       },
       {
-          "Sid": "Enable Cloud9 Environment to Decrypt",
+          "Sid": "Enable Development Environment to Decrypt",
           "Effect": "Allow",
           "Principal": {
               "AWS": "AWS_PRINCIPAL"
