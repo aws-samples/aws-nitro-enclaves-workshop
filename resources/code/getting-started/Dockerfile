@@ -18,7 +18,7 @@ RUN dnf install -y \
 	ninja-build \
 	doxygen
 
-RUN curl https://sh.rustup.rs -sSf | sh -s -- -y --profile minimal --default-toolchain 1.63
+RUN curl https://sh.rustup.rs -sSf | sh -s -- -y --profile minimal --default-toolchain 1.68
 
 # We keep the build artifacts in the -build directory
 WORKDIR /tmp/crt-builder
