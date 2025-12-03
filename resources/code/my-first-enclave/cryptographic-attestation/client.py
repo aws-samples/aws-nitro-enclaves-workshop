@@ -36,12 +36,38 @@ def parse_args():
     return parser.parse_args()
 
 
+def get_imds_token():
+    """
+    Get IMDSv2 token. Returns None if IMDSv2 is not available.
+    """
+    try:
+        r = requests.put(
+            "http://169.254.169.254/latest/api/token",
+            headers={"X-aws-ec2-metadata-token-ttl-seconds": "21600"},
+            timeout=1
+        )
+        if r.status_code == 200:
+            return r.text
+    except:
+        pass
+    return None
+
+
 def get_identity_document():
     """
     Get identity document for current EC2 Host
+    Supports both IMDSv1 and IMDSv2
     """
+    # Try IMDSv2 first
+    token = get_imds_token()
+    headers = {}
+    if token:
+        headers["X-aws-ec2-metadata-token"] = token
+    
     r = requests.get(
-        "http://169.254.169.254/latest/dynamic/instance-identity/document")
+        "http://169.254.169.254/latest/dynamic/instance-identity/document",
+        headers=headers
+    )
     return r
 
 
@@ -71,14 +97,25 @@ def set_identity():
 def prepare_server_request(ciphertext):
     """
     Get the AWS credential from EC2 instance metadata
+    Supports both IMDSv1 and IMDSv2
     """
+    # Try IMDSv2 first
+    token = get_imds_token()
+    headers = {}
+    if token:
+        headers["X-aws-ec2-metadata-token"] = token
+    
     r = requests.get(
-        "http://169.254.169.254/latest/meta-data/iam/security-credentials/")
+        "http://169.254.169.254/latest/meta-data/iam/security-credentials/",
+        headers=headers
+    )
     instance_profile_name = r.text
 
     r = requests.get(
         "http://169.254.169.254/latest/meta-data/iam/security-credentials/%s" %
-        instance_profile_name)
+        instance_profile_name,
+        headers=headers
+    )
     response = r.json()
 
     print(ciphertext)
